@@ -78,23 +78,65 @@ Route::post('/logout', [AuthController::class, 'logout'])
 // VERIFIKASI EMAIL
 // ======================================================================
 
+// Halaman pemberitahuan verifikasi
 Route::get('/verifikasi-email', function () {
+
     return view('auth.verify-email');
+
 })
     ->middleware('auth')
     ->name('verification.notice');
 
+
+// Link verifikasi dari email
 Route::get('/verifikasi-email/{id}/{hash}', function (
-    Illuminate\Foundation\Auth\EmailVerificationRequest $request
+    \Illuminate\Foundation\Auth\EmailVerificationRequest $request
 ) {
+
     $request->fulfill();
 
     return redirect()
         ->route('dashboard')
-        ->with('status', 'Email berhasil diverifikasi.');
+        ->with(
+            'status',
+            'Email berhasil diverifikasi.'
+        );
+
 })
-    ->middleware(['auth', 'signed'])
+    ->middleware([
+        'auth',
+        'signed',
+        'throttle:6,1'
+    ])
     ->name('verification.verify');
+
+
+// Kirim ulang email verifikasi
+Route::post('/verifikasi-email/kirim', function (
+    \Illuminate\Http\Request $request
+) {
+
+    if ($request->user()->hasVerifiedEmail()) {
+
+        return redirect()
+            ->route('dashboard');
+    }
+
+    $request->user()
+        ->sendEmailVerificationNotification();
+
+    return back()
+        ->with(
+            'status',
+            'Link verifikasi baru telah dikirim ke email Anda.'
+        );
+
+})
+    ->middleware([
+        'auth',
+        'throttle:6,1'
+    ])
+    ->name('verification.send');
 
 
 // ======================================================================

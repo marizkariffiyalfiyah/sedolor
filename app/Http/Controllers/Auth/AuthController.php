@@ -13,18 +13,44 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+    /**
+     * Menampilkan halaman registrasi.
+     */
     public function showRegister()
     {
         return view('auth.register');
     }
 
+    /**
+     * Proses registrasi akun.
+     */
     public function register(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['required', 'string', 'max:20'],
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+            ],
+
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8),
+            ],
         ]);
 
         $user = User::create([
@@ -35,40 +61,123 @@ class AuthController extends Controller
             'role' => 'pemohon',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Kirim email verifikasi
+        |--------------------------------------------------------------------------
+        */
+
         event(new Registered($user));
+
+        /*
+        |--------------------------------------------------------------------------
+        | Login otomatis setelah registrasi
+        |--------------------------------------------------------------------------
+        */
+
         Auth::login($user);
 
-        return redirect()->route('verification.notice')
-            ->with('status', 'Registrasi berhasil. Silakan verifikasi email Anda.');
+        $request->session()->regenerate();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Arahkan ke halaman verifikasi
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route('verification.notice')
+            ->with(
+                'status',
+                'Registrasi berhasil. Silakan periksa email Anda untuk melakukan verifikasi.'
+            );
     }
 
+    /**
+     * Menampilkan halaman login.
+     */
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    /**
+     * Proses login.
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => [
+                'required',
+                'email',
+            ],
+
+            'password' => [
+                'required',
+            ],
         ]);
 
-        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+        /*
+        |--------------------------------------------------------------------------
+        | Coba login
+        |--------------------------------------------------------------------------
+        */
+
+        if (!Auth::attempt(
+            $credentials,
+            $request->boolean('remember')
+        )) {
             return back()
-                ->withErrors(['email' => 'Email atau kata sandi salah.'])
-                ->onlyInput('email');
+                ->withErrors([
+                    'email' => 'Email atau kata sandi salah.',
+                ])
+                ->withInput($request->only('email'));
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Regenerate session
+        |--------------------------------------------------------------------------
+        */
 
         $request->session()->regenerate();
 
         $user = Auth::user();
 
-        if ($user->isVerifikator()) {
-            return redirect()->route('admin.verifikasi.index');
+        /*
+        |--------------------------------------------------------------------------
+        | Jika email belum diverifikasi
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()
+                ->route('verification.notice')
+                ->with(
+                    'status',
+                    'Silakan verifikasi email Anda terlebih dahulu.'
+                );
         }
 
-        return redirect()->intended(route('dashboard'));
+        /*
+        |--------------------------------------------------------------------------
+        | Jika user adalah verifikator
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->isVerifikator()) {
+            return redirect()
+                ->route('admin.verifikasi.index');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | User pemohon
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->intended(route('dashboard'));
     }
 
     // ==========================================================
@@ -98,7 +207,9 @@ class AuthController extends Controller
         }
 
         return back()
-            ->withErrors(['email' => __($status)])
+            ->withErrors([
+                'email' => __($status),
+            ])
             ->onlyInput('email');
     }
 
@@ -106,13 +217,18 @@ class AuthController extends Controller
     // LOGOUT
     // ==========================================================
 
+    /**
+     * Logout.
+     */
     public function logout(Request $request)
     {
         Auth::logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        return redirect()
+            ->route('home');
     }
 }

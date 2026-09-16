@@ -14,14 +14,11 @@
         --primary: #155eef;
         --primary-dark: #1048c7;
         --primary-soft: #eff6ff;
-
         --text-main: #172b4d;
         --text-secondary: #526581;
-
         --border: #cbd5e1;
         --danger: #b42318;
     }
-
 
     /* =========================================================
        ACCESSIBILITY - KEYBOARD FOCUS
@@ -32,13 +29,8 @@
         outline-offset: 3px !important;
     }
 
-
     /* =========================================================
        ACCESSIBILITY - LARGE TEXT
-
-       IMPORTANT:
-       Kita membesarkan class text Tailwind secara langsung,
-       bukan hanya font-size body.
     ========================================================= */
 
     .accessibility-large-text .text-xs {
@@ -86,7 +78,6 @@
     .accessibility-large-text a {
         font-size: 1.05rem !important;
     }
-
 
     /* =========================================================
        ACCESSIBILITY - EXTRA LARGE TEXT
@@ -138,7 +129,6 @@
         font-size: 1.2rem !important;
     }
 
-
     /* =========================================================
        ACCESSIBILITY - HIGH CONTRAST
     ========================================================= */
@@ -174,13 +164,11 @@
         border: 3px solid #000000 !important;
     }
 
-
     /* =========================================================
        REDUCE MOTION
     ========================================================= */
 
     @media (prefers-reduced-motion: reduce) {
-
         *,
         *::before,
         *::after {
@@ -189,22 +177,17 @@
             transition-duration: 0.01ms !important;
             scroll-behavior: auto !important;
         }
-
     }
 
-
     /* =========================================================
-       MOBILE ADJUSTMENT
+       MOBILE
     ========================================================= */
 
     @media (max-width: 640px) {
-
         .login-heading {
             font-size: 2rem !important;
         }
-
     }
-
 </style>
 
 
@@ -217,10 +200,7 @@
     class="login-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 px-5 py-6 sm:px-8 lg:px-12 lg:py-8"
 >
 
-
-    <!-- =====================================================
-         DECORATIVE BACKGROUND
-    ====================================================== -->
+    <!-- Decorative Background -->
 
     <div
         class="pointer-events-none fixed -right-32 -top-32 h-96 w-96 rounded-full bg-blue-200/30 blur-3xl"
@@ -233,20 +213,18 @@
     ></div>
 
 
-
-    <!-- =====================================================
-         MAIN WEBSITE CONTAINER
-    ====================================================== -->
+    <!-- Main Container -->
 
     <div class="relative mx-auto w-full max-w-7xl">
 
+        <!-- =====================================================
+             ACCESSIBILITY CONTROLS
+        ====================================================== -->
 
-            <!-- =================================================
-                 ACCESSIBILITY CONTROLS
-            ================================================== -->
+        <header class="mb-8">
 
             <div
-                class="flex flex-wrap items-center gap-2"
+                class="flex flex-wrap items-center justify-end gap-2"
                 aria-label="Pengaturan aksesibilitas"
             >
 
@@ -273,7 +251,6 @@
                     </span>
 
                 </button>
-
 
 
                 <!-- High Contrast -->
@@ -305,13 +282,11 @@
         </header>
 
 
-
         <!-- =====================================================
              CONTENT
         ====================================================== -->
 
         <main>
-
 
             <!-- =================================================
                  WELCOME SECTION
@@ -321,6 +296,16 @@
                 class="mx-auto mb-9 max-w-3xl text-center"
                 aria-labelledby="page-title"
             >
+
+                <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border-2 border-blue-200 bg-blue-50 p-2.5 shadow-sm">
+
+                    <img
+                        src="{{ asset('storage/assets/logosedolor.png') }}"
+                        alt="Logo Sedulur"
+                        class="h-full w-full object-contain"
+                    >
+
+                </div>
 
 
                 <h1
@@ -337,7 +322,6 @@
                 </p>
 
             </section>
-
 
 
             <!-- =================================================
@@ -357,10 +341,7 @@
                 </h2>
 
 
-
-                <!-- =================================================
-                     ERROR MESSAGE
-                ================================================== -->
+                <!-- ERROR MESSAGE -->
 
                 @if ($errors->any())
 
@@ -428,10 +409,25 @@
                 @endif
 
 
+                <!-- STATUS -->
 
-                <!-- =================================================
-                     SECURITY INFORMATION
-                ================================================== -->
+                @if (session('status'))
+
+                    <div
+                        class="mb-7 rounded-2xl border-2 border-green-300 bg-green-50 p-5"
+                        role="alert"
+                    >
+
+                        <p class="text-sm font-semibold text-green-800">
+                            {{ session('status') }}
+                        </p>
+
+                    </div>
+
+                @endif
+
+
+                <!-- SECURITY INFORMATION -->
 
                 <div
                     class="mb-7 flex items-start gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4"
@@ -478,7 +474,6 @@
                 </div>
 
 
-
                 <!-- =================================================
                      LOGIN FORM
                 ================================================== -->
@@ -492,10 +487,7 @@
                     @csrf
 
 
-
-                    <!-- =============================================
-                         EMAIL
-                    ============================================== -->
+                    <!-- EMAIL -->
 
                     <div>
 
@@ -521,8 +513,6 @@
 
 
                         <div class="relative">
-
-                            <!-- Email Icon -->
 
                             <div
                                 class="pointer-events-none absolute inset-y-0 left-0 flex w-14 items-center justify-center text-blue-700"
@@ -600,10 +590,7 @@
                     </div>
 
 
-
-                    <!-- =============================================
-                         PASSWORD
-                    ============================================== -->
+                    <!-- PASSWORD -->
 
                     <div>
 
@@ -630,8 +617,6 @@
 
                         <div class="relative">
 
-                            <!-- Lock Icon -->
-
                             <div
                                 class="pointer-events-none absolute inset-y-0 left-0 flex w-14 items-center justify-center text-blue-700"
                                 aria-hidden="true"
@@ -648,7 +633,7 @@
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-2V7a4 4 0 00-8 0v4H6"
                                     />
 
                                 </svg>
@@ -682,8 +667,6 @@
                                 title="Tampilkan kata sandi"
                             >
 
-                                <!-- Eye Open -->
-
                                 <svg
                                     id="eyeOpen"
                                     class="h-5 w-5"
@@ -708,8 +691,6 @@
 
                                 </svg>
 
-
-                                <!-- Eye Closed -->
 
                                 <svg
                                     id="eyeClosed"
@@ -757,14 +738,9 @@
                     </div>
 
 
-
-                    <!-- =============================================
-                         REMEMBER ME + FORGOT PASSWORD
-                    ============================================== -->
+                    <!-- REMEMBER ME + FORGOT PASSWORD -->
 
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-
-                        <!-- Remember Me -->
 
                         <label
                             for="remember"
@@ -775,6 +751,7 @@
                                 type="checkbox"
                                 name="remember"
                                 id="remember"
+                                value="1"
                                 class="h-6 w-6 cursor-pointer rounded-md border-2 border-slate-400 text-blue-700 focus:ring-4 focus:ring-blue-200"
                             >
 
@@ -784,8 +761,6 @@
 
                         </label>
 
-
-                        <!-- Forgot Password -->
 
                         <a
                             href="{{ route('password.request') }}"
@@ -797,10 +772,7 @@
                     </div>
 
 
-
-                    <!-- =================================================
-                         LOGIN BUTTON
-                    ================================================== -->
+                    <!-- LOGIN BUTTON -->
 
                     <button
                         type="submit"
@@ -833,10 +805,7 @@
                 </form>
 
 
-
-                <!-- =================================================
-                     REGISTER
-                ================================================== -->
+                <!-- REGISTER -->
 
                 <div class="my-8 flex items-center gap-4">
 
@@ -887,15 +856,12 @@
                 </div>
 
 
-
-                <!-- =================================================
-                     BACK TO HOME
-                ================================================== -->
+                <!-- BACK TO HOME -->
 
                 <div class="mt-7 text-center">
 
                     <a
-                        href="/"
+                        href="{{ route('home') }}"
                         class="inline-flex min-h-[46px] items-center gap-2 rounded-xl px-5 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-50 hover:text-blue-700"
                     >
 
@@ -923,7 +889,6 @@
                 </div>
 
             </section>
-
 
 
             <!-- =================================================
@@ -985,10 +950,7 @@
                 </div>
 
 
-
                 <div class="grid gap-3 sm:grid-cols-3">
-
-                    <!-- Keyboard -->
 
                     <div class="rounded-xl bg-slate-50 p-4 text-center">
 
@@ -1006,8 +968,6 @@
                     </div>
 
 
-                    <!-- Vision -->
-
                     <div class="rounded-xl bg-slate-50 p-4 text-center">
 
                         <div
@@ -1023,8 +983,6 @@
 
                     </div>
 
-
-                    <!-- Screen reader -->
 
                     <div class="rounded-xl bg-slate-50 p-4 text-center">
 
@@ -1048,10 +1006,7 @@
         </main>
 
 
-
-        <!-- =====================================================
-             FOOTER
-        ====================================================== -->
+        <!-- FOOTER -->
 
         <footer class="mt-10 border-t border-slate-200 py-6 text-center">
 
@@ -1072,7 +1027,6 @@
 </div>
 
 
-
 <!-- =========================================================
      JAVASCRIPT
 ========================================================= -->
@@ -1081,23 +1035,14 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
     /* ========================================================
        SHOW / HIDE PASSWORD
     ======================================================== */
 
-    const passwordInput =
-        document.getElementById('password');
-
-    const togglePassword =
-        document.getElementById('togglePassword');
-
-    const eyeOpen =
-        document.getElementById('eyeOpen');
-
-    const eyeClosed =
-        document.getElementById('eyeClosed');
-
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const eyeOpen = document.getElementById('eyeOpen');
+    const eyeClosed = document.getElementById('eyeClosed');
 
     if (
         passwordInput &&
@@ -1108,9 +1053,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         togglePassword.addEventListener('click', function () {
 
-            const isHidden =
-                passwordInput.type === 'password';
-
+            const isHidden = passwordInput.type === 'password';
 
             if (isHidden) {
 
@@ -1132,7 +1075,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.add('hidden');
-
                 eyeClosed.classList.remove('hidden');
 
             } else {
@@ -1155,7 +1097,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.remove('hidden');
-
                 eyeClosed.classList.add('hidden');
 
             }
@@ -1165,20 +1106,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     /* ========================================================
        FONT SIZE ACCESSIBILITY
-
-       0 = normal
-       1 = large
-       2 = extra large
     ======================================================== */
 
-    const fontSizeButton =
-        document.getElementById('fontSizeButton');
+    const fontSizeButton = document.getElementById('fontSizeButton');
 
     let fontSizeLevel = 0;
-
 
     if (fontSizeButton) {
 
@@ -1186,25 +1120,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             fontSizeLevel++;
 
-
             if (fontSizeLevel > 2) {
                 fontSizeLevel = 0;
             }
-
-
-            /*
-             * Hapus ukuran sebelumnya
-             */
 
             document.body.classList.remove(
                 'accessibility-large-text',
                 'accessibility-extra-large-text'
             );
 
-
-            /*
-             * NORMAL
-             */
 
             if (fontSizeLevel === 0) {
 
@@ -1225,10 +1149,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
-
-            /*
-             * LARGE
-             */
 
             if (fontSizeLevel === 1) {
 
@@ -1253,10 +1173,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
-
-            /*
-             * EXTRA LARGE
-             */
 
             if (fontSizeLevel === 2) {
 
@@ -1286,14 +1202,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     /* ========================================================
        HIGH CONTRAST
     ======================================================== */
 
-    const contrastButton =
-        document.getElementById('contrastButton');
-
+    const contrastButton = document.getElementById('contrastButton');
 
     if (contrastButton) {
 
@@ -1304,12 +1217,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     'high-contrast'
                 );
 
-
             contrastButton.setAttribute(
                 'aria-pressed',
                 active ? 'true' : 'false'
             );
-
 
             contrastButton.setAttribute(
                 'aria-label',
@@ -1317,7 +1228,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     ? 'Matikan kontras tinggi'
                     : 'Aktifkan kontras tinggi'
             );
-
 
             contrastButton.setAttribute(
                 'title',
