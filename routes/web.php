@@ -33,20 +33,42 @@ Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
 
 Route::middleware('guest')->group(function () {
 
-    // Daftar akun
+    // ------------------------------------------------------------------
+    // DAFTAR AKUN
+    // ------------------------------------------------------------------
+
     Route::get('/daftar', [AuthController::class, 'showRegister'])
         ->name('register');
 
     Route::post('/daftar', [AuthController::class, 'register']);
 
-    // Login
+
+    // ------------------------------------------------------------------
+    // LOGIN
+    // ------------------------------------------------------------------
+
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
 
     Route::post('/login', [AuthController::class, 'login']);
+
+
+    // ------------------------------------------------------------------
+    // LUPA KATA SANDI
+    // ------------------------------------------------------------------
+
+    Route::get('/lupa-kata-sandi', [AuthController::class, 'showForgotPassword'])
+        ->name('password.request');
+
+    Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
+        ->name('password.email');
 });
 
-// Logout
+
+// ======================================================================
+// LOGOUT
+// ======================================================================
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
@@ -82,7 +104,10 @@ Route::get('/verifikasi-email/{id}/{hash}', function (
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Dashboard asli
+    // ------------------------------------------------------------------
+    // DASHBOARD
+    // ------------------------------------------------------------------
+
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 

@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password as PasswordFacade;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -54,12 +55,15 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($credentials, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'Email atau kata sandi salah.'])->onlyInput('email');
+            return back()
+                ->withErrors(['email' => 'Email atau kata sandi salah.'])
+                ->onlyInput('email');
         }
 
         $request->session()->regenerate();
 
         $user = Auth::user();
+
         if ($user->isVerifikator()) {
             return redirect()->route('admin.verifikasi.index');
         }
@@ -67,9 +71,45 @@ class AuthController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
+    // ==========================================================
+    // LUPA KATA SANDI
+    // ==========================================================
+
+    public function showForgotPassword()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $status = PasswordFacade::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === PasswordFacade::RESET_LINK_SENT) {
+            return back()->with(
+                'status',
+                'Link reset kata sandi telah dikirim ke email Anda.'
+            );
+        }
+
+        return back()
+            ->withErrors(['email' => __($status)])
+            ->onlyInput('email');
+    }
+
+    // ==========================================================
+    // LOGOUT
+    // ==========================================================
+
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
