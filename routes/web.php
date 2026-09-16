@@ -26,54 +26,103 @@ Route::get('/informasi-produk', [HomeController::class, 'informasiProduk'])
 Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
     ->name('aksesibilitas.update');
 
-
 // ======================================================================
 // AUTH
 // ======================================================================
 
 Route::middleware('guest')->group(function () {
 
-    // Daftar akun
+    // --------------------------------------------------
+    // DAFTAR
+    // --------------------------------------------------
+
     Route::get('/daftar', [AuthController::class, 'showRegister'])
         ->name('register');
 
     Route::post('/daftar', [AuthController::class, 'register']);
 
-    // Login
+
+    // --------------------------------------------------
+    // LOGIN
+    // --------------------------------------------------
+
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
 
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-// Logout
+
+// --------------------------------------------------
+// LOGOUT
+// --------------------------------------------------
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-
-
-// ======================================================================
+    // ======================================================================
 // VERIFIKASI EMAIL
 // ======================================================================
 
+// Halaman pemberitahuan verifikasi
 Route::get('/verifikasi-email', function () {
+
     return view('auth.verify-email');
+
 })
     ->middleware('auth')
     ->name('verification.notice');
 
+
+// Link verifikasi dari email
 Route::get('/verifikasi-email/{id}/{hash}', function (
-    Illuminate\Foundation\Auth\EmailVerificationRequest $request
+    \Illuminate\Foundation\Auth\EmailVerificationRequest $request
 ) {
+
     $request->fulfill();
 
     return redirect()
         ->route('dashboard')
-        ->with('status', 'Email berhasil diverifikasi.');
+        ->with(
+            'status',
+            'Email berhasil diverifikasi.'
+        );
+
 })
-    ->middleware(['auth', 'signed'])
+    ->middleware([
+        'auth',
+        'signed',
+        'throttle:6,1'
+    ])
     ->name('verification.verify');
 
+
+// Kirim ulang email verifikasi
+Route::post('/verifikasi-email/kirim', function (
+    \Illuminate\Http\Request $request
+) {
+
+    if ($request->user()->hasVerifiedEmail()) {
+
+        return redirect()
+            ->route('dashboard');
+    }
+
+    $request->user()
+        ->sendEmailVerificationNotification();
+
+    return back()
+        ->with(
+            'status',
+            'Link verifikasi baru telah dikirim ke email Anda.'
+        );
+
+})
+    ->middleware([
+        'auth',
+        'throttle:6,1'
+    ])
+    ->name('verification.send');
 
 // ======================================================================
 // AREA PEMOHON
