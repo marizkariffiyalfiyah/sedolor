@@ -367,44 +367,7 @@
 
         </div>
 
-
-        <!-- Accessibility -->
-        <div class="mt-6 text-center">
-
-            <div class="inline-flex items-center gap-2
-                        px-4 py-2
-                        rounded-full
-                        bg-white
-                        border border-slate-200
-                        text-xs text-slate-500">
-
-                <span class="text-base" aria-hidden="true">
-                    ♿
-                </span>
-
-                <span>
-                    Portal mendukung fitur aksesibilitas
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- Back -->
-        <div class="mt-5 text-center">
-
-            <a
-                href="/"
-                class="text-sm text-slate-500 hover:text-blue-700 transition"
-            >
-                ← Kembali ke Beranda
-            </a>
-
-        </div>
-
-    </div>
-
+</div>
 </div>
 
 @endsection

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi Produk BPOM</title>
+    <title>SEDOLOR</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -25,7 +25,7 @@
 
     <div>
         <h1 class="font-bold text-slate-900 text-lg leading-tight">
-            Registrasi Produk
+            Sedolor
         </h1>
         <p class="text-xs text-slate-500">
             Layanan Pendaftaran Produk
@@ -33,18 +33,13 @@
     </div>
 </a>
 
-
-                <!-- Navigation -->
-                <div class="hidden md:flex items-center gap-3">
-                    <a href="#informasi"
-                       class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 transition">
-                        Informasi
-                    </a>
-
-                    <a href="#aksesibilitas"
-                       class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 transition">
-                        Aksesibilitas
-                    </a>
+<!-- Navigation -->
+<div class="hidden md:flex items-center gap-3">
+<a href="{{ route('home') }}"
+   class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 transition">
+    Beranda
+</a>
+                  
 
                     <a href="{{ route('login') }}"
                        class="px-5 py-2.5 rounded-lg border border-blue-700 text-blue-700 font-semibold text-sm hover:bg-blue-50 transition">

@@ -316,46 +316,6 @@
         </div>
 
 
-        {{-- ==========================================================
-             ACCESSIBILITY
-        =========================================================== --}}
-
-        <div class="mt-6 text-center">
-
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-300 shadow-sm text-xs font-semibold text-slate-700">
-
-                <svg
-                    class="w-4 h-4 text-blue-700"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v6h6v-2h-4z"/>
-                </svg>
-
-                <span>
-                    Portal mendukung fitur aksesibilitas penuh
-                </span>
-
-            </div>
-
-        </div>
-
-
-        {{-- ==========================================================
-             BACK TO HOME
-        =========================================================== --}}
-
-        <div class="mt-5 text-center">
-
-            <a
-                href="{{ route('home') }}"
-                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white/80 border border-slate-300 hover:text-blue-700 hover:bg-white hover:border-slate-400 shadow-sm transition"
-            >
-                <span>←</span>
-                <span>Kembali ke Beranda</span>
-            </a>
-
-        </div>
 
     </div>
 
