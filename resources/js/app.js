@@ -1,3 +1,10 @@
+
+import Alpine from 'alpinejs';
+
+// Wajib didaftarkan ke window agar Alpine dapat dibaca oleh Laravel Blade
+window.Alpine = Alpine;
+Alpine.start();
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const toggle = document.getElementById('accessibilityToggle');
