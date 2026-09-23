@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -63,14 +62,6 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Kirim email verifikasi
-        |--------------------------------------------------------------------------
-        */
-
-        event(new Registered($user));
-
-        /*
-        |--------------------------------------------------------------------------
         | Login otomatis setelah registrasi
         |--------------------------------------------------------------------------
         */
@@ -79,18 +70,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Arahkan ke halaman verifikasi
-        |--------------------------------------------------------------------------
-        */
-
-        return redirect()
-            ->route('verification.notice')
-            ->with(
-                'status',
-                'Registrasi berhasil. Silakan periksa email Anda untuk melakukan verifikasi.'
-            );
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -146,28 +126,12 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Jika email belum diverifikasi
-        |--------------------------------------------------------------------------
-        */
-
-        if (!$user->hasVerifiedEmail()) {
-            return redirect()
-                ->route('verification.notice')
-                ->with(
-                    'status',
-                    'Silakan verifikasi email Anda terlebih dahulu.'
-                );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
         | Jika user adalah verifikator
         |--------------------------------------------------------------------------
         */
 
         if ($user->isVerifikator()) {
-            return redirect()
-                ->route('admin.verifikasi.index');
+            return redirect()->route('admin.verifikasi.index');
         }
 
         /*
@@ -184,15 +148,24 @@ class AuthController extends Controller
     // LUPA KATA SANDI
     // ==========================================================
 
+    /**
+     * Menampilkan halaman lupa kata sandi.
+     */
     public function showForgotPassword()
     {
         return view('auth.forgot-password');
     }
 
+    /**
+     * Mengirim tautan reset kata sandi ke email.
+     */
     public function sendResetLink(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'email'],
+            'email' => [
+                'required',
+                'email',
+            ],
         ]);
 
         $status = PasswordFacade::sendResetLink(
@@ -211,6 +184,68 @@ class AuthController extends Controller
                 'email' => __($status),
             ])
             ->onlyInput('email');
+    }
+
+    /**
+     * Menampilkan halaman untuk membuat kata sandi baru.
+     */
+    public function showResetPassword(Request $request, string $token)
+    {
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $request->email,
+        ]);
+    }
+
+    /**
+     * Memproses perubahan kata sandi.
+     */
+    public function resetPassword(Request $request)
+    {
+        $data = $request->validate([
+            'token' => [
+                'required',
+            ],
+
+            'email' => [
+                'required',
+                'email',
+            ],
+
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8),
+            ],
+        ]);
+
+        $status = PasswordFacade::reset(
+            [
+                'token' => $data['token'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'password_confirmation' => $request->password_confirmation,
+            ],
+            function (User $user, string $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+
+        if ($status === PasswordFacade::PASSWORD_RESET) {
+            return redirect()
+                ->route('login')
+                ->with(
+                    'status',
+                    'Kata sandi berhasil diubah. Silakan masuk menggunakan kata sandi baru Anda.'
+                );
+        }
+
+        return back()
+            ->withErrors([
+                'email' => __($status),
+            ])
+            ->withInput($request->only('email'));
     }
 
     // ==========================================================

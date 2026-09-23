@@ -62,6 +62,16 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
         ->name('password.email');
+
+    // ------------------------------------------------------------------
+    // RESET KATA SANDI
+    // ------------------------------------------------------------------
+
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
+        ->name('password.reset');
+
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+        ->name('password.update');
 });
 
 
@@ -75,76 +85,11 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 
 // ======================================================================
-// VERIFIKASI EMAIL
-// ======================================================================
-
-// Halaman pemberitahuan verifikasi
-Route::get('/verifikasi-email', function () {
-
-    return view('auth.verify-email');
-
-})
-    ->middleware('auth')
-    ->name('verification.notice');
-
-
-// Link verifikasi dari email
-Route::get('/verifikasi-email/{id}/{hash}', function (
-    \Illuminate\Foundation\Auth\EmailVerificationRequest $request
-) {
-
-    $request->fulfill();
-
-    return redirect()
-        ->route('dashboard')
-        ->with(
-            'status',
-            'Email berhasil diverifikasi.'
-        );
-
-})
-    ->middleware([
-        'auth',
-        'signed',
-        'throttle:6,1'
-    ])
-    ->name('verification.verify');
-
-
-// Kirim ulang email verifikasi
-Route::post('/verifikasi-email/kirim', function (
-    \Illuminate\Http\Request $request
-) {
-
-    if ($request->user()->hasVerifiedEmail()) {
-
-        return redirect()
-            ->route('dashboard');
-    }
-
-    $request->user()
-        ->sendEmailVerificationNotification();
-
-    return back()
-        ->with(
-            'status',
-            'Link verifikasi baru telah dikirim ke email Anda.'
-        );
-
-})
-    ->middleware([
-        'auth',
-        'throttle:6,1'
-    ])
-    ->name('verification.send');
-
-
-// ======================================================================
 // AREA PEMOHON
-// HARUS LOGIN & EMAIL TERVERIFIKASI
+// HARUS LOGIN
 // ======================================================================
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // ------------------------------------------------------------------
     // DASHBOARD
@@ -232,9 +177,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // ======================================================================
 // AREA VERIFIKATOR BPOM
+// HARUS LOGIN & MEMILIKI ROLE VERIFIKATOR
 // ======================================================================
 
-Route::middleware(['auth', 'verified', 'verifikator'])
+Route::middleware(['auth', 'verifikator'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -291,7 +237,6 @@ Route::get('/demo-monitoring-show', function () {
         'id' => 1,
         'nama_produk' => 'Keripik Singkong Balado',
         'nomor_pengajuan' => 'REQ-2026-0001',
-        'brand' => 'Maicih Rasa Nusantara',
         'status' => 'sedang_diproses',
 
         'statusLabel' => function () {
@@ -328,6 +273,7 @@ Route::get('/demo-monitoring-show', function () {
 // ======================================================================
 
 Route::get('/dashboard-demo', function () {
+
     $products = collect();
 
     return view('dashboard', compact('products'));
