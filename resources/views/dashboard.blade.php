@@ -4,13 +4,13 @@
 
 @section('content')
 
-<main id="main-content" class="min-h-screen bg-slate-50">
+<main id="main-content" class="min-h-screen bg-slate-50 scroll-smooth">
 
 ```
 {{-- =========================================================
      WELCOME
      ========================================================= --}}
-<section class="relative overflow-hidden bg-gradient-to-b from-blue-100 to-slate-50 py-10 sm:py-14">
+<section id="informasi" class="relative overflow-hidden bg-gradient-to-b from-blue-100 to-slate-50 py-10 sm:py-14">
 
     {{-- Decorative circles --}}
     <div class="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full border border-blue-200/60 bg-blue-500/10"></div>
@@ -127,7 +127,7 @@
 {{-- =========================================================
      MAIN DASHBOARD
      ========================================================= --}}
-<section class="bg-gradient-to-b from-slate-50 to-blue-50/60 py-10 sm:py-14">
+<section  class="bg-gradient-to-b from-slate-50 to-blue-50/60 py-10 sm:py-14">
 
     <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
 

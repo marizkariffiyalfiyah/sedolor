@@ -1039,10 +1039,18 @@ document.addEventListener('DOMContentLoaded', function () {
        SHOW / HIDE PASSWORD
     ======================================================== */
 
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
-    const eyeOpen = document.getElementById('eyeOpen');
-    const eyeClosed = document.getElementById('eyeClosed');
+    const passwordInput =
+        document.getElementById('password');
+
+    const togglePassword =
+        document.getElementById('togglePassword');
+
+    const eyeOpen =
+        document.getElementById('eyeOpen');
+
+    const eyeClosed =
+        document.getElementById('eyeClosed');
+
 
     if (
         passwordInput &&
@@ -1053,7 +1061,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         togglePassword.addEventListener('click', function () {
 
-            const isHidden = passwordInput.type === 'password';
+            const isHidden =
+                passwordInput.type === 'password';
+
 
             if (isHidden) {
 
@@ -1075,6 +1085,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.add('hidden');
+
                 eyeClosed.classList.remove('hidden');
 
             } else {
@@ -1097,6 +1108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.remove('hidden');
+
                 eyeClosed.classList.add('hidden');
 
             }
@@ -1108,11 +1120,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ========================================================
        FONT SIZE ACCESSIBILITY
+
+       0 = normal
+       1 = large
+       2 = extra large
     ======================================================== */
 
-    const fontSizeButton = document.getElementById('fontSizeButton');
+    const fontSizeButton =
+        document.getElementById('fontSizeButton');
 
     let fontSizeLevel = 0;
+
 
     if (fontSizeButton) {
 
@@ -1120,15 +1138,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
             fontSizeLevel++;
 
+
             if (fontSizeLevel > 2) {
                 fontSizeLevel = 0;
             }
+
 
             document.body.classList.remove(
                 'accessibility-large-text',
                 'accessibility-extra-large-text'
             );
 
+
+            /* NORMAL */
 
             if (fontSizeLevel === 0) {
 
@@ -1149,6 +1171,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
+
+            /* LARGE */
 
             if (fontSizeLevel === 1) {
 
@@ -1173,6 +1197,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
+
+            /* EXTRA LARGE */
 
             if (fontSizeLevel === 2) {
 
@@ -1206,7 +1232,9 @@ document.addEventListener('DOMContentLoaded', function () {
        HIGH CONTRAST
     ======================================================== */
 
-    const contrastButton = document.getElementById('contrastButton');
+    const contrastButton =
+        document.getElementById('contrastButton');
+
 
     if (contrastButton) {
 
@@ -1217,10 +1245,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     'high-contrast'
                 );
 
+
             contrastButton.setAttribute(
                 'aria-pressed',
                 active ? 'true' : 'false'
             );
+
 
             contrastButton.setAttribute(
                 'aria-label',
@@ -1228,6 +1258,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ? 'Matikan kontras tinggi'
                     : 'Aktifkan kontras tinggi'
             );
+
 
             contrastButton.setAttribute(
                 'title',

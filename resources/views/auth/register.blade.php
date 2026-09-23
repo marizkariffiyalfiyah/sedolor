@@ -38,9 +38,6 @@
 
     /* =========================================================
        LARGE TEXT
-       
-       Tailwind text-* classes are overridden directly.
-       Jadi bukan cuma logo yang membesar.
     ========================================================= */
 
     .accessibility-large-text .text-xs {
@@ -206,7 +203,6 @@
 </style>
 
 
-
 <!-- =========================================================
      PAGE
 ========================================================= -->
@@ -229,78 +225,71 @@
     ></div>
 
 
-
     <!-- =====================================================
          MAIN CONTAINER
     ====================================================== -->
 
     <div class="relative mx-auto w-full max-w-7xl">
 
+        <!-- =================================================
+             ACCESSIBILITY CONTROLS
+        ================================================== -->
 
-    
-            <!-- =================================================
-                 ACCESSIBILITY CONTROLS
-            ================================================== -->
+        <div
+            class="mb-8 flex flex-wrap items-center justify-end gap-2"
+            aria-label="Pengaturan aksesibilitas"
+        >
 
-            <div
-                class="flex flex-wrap items-center gap-2"
-                aria-label="Pengaturan aksesibilitas"
+            <!-- Font Size -->
+
+            <button
+                type="button"
+                id="fontSizeButton"
+                class="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-blue-200 bg-white px-4 py-2 text-sm font-bold text-[#12326b] shadow-sm transition hover:border-blue-500 hover:bg-blue-50"
+                aria-label="Perbesar ukuran teks"
+                aria-pressed="false"
+                title="Perbesar ukuran teks"
             >
 
-                <!-- Font Size -->
-
-                <button
-                    type="button"
-                    id="fontSizeButton"
-                    class="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-blue-200 bg-white px-4 py-2 text-sm font-bold text-[#12326b] shadow-sm transition hover:border-blue-500 hover:bg-blue-50"
-                    aria-label="Perbesar ukuran teks"
-                    aria-pressed="false"
-                    title="Perbesar ukuran teks"
+                <span
+                    class="text-lg font-black"
+                    aria-hidden="true"
                 >
+                    T
+                </span>
 
-                    <span
-                        class="text-lg font-black"
-                        aria-hidden="true"
-                    >
-                        T
-                    </span>
+                <span>
+                    Ukuran Teks
+                </span>
 
-                    <span>
-                        Ukuran Teks
-                    </span>
-
-                </button>
+            </button>
 
 
+            <!-- Contrast -->
 
-                <!-- Contrast -->
+            <button
+                type="button"
+                id="contrastButton"
+                class="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-blue-200 bg-white px-4 py-2 text-sm font-bold text-[#12326b] shadow-sm transition hover:border-blue-500 hover:bg-blue-50"
+                aria-label="Aktifkan kontras tinggi"
+                aria-pressed="false"
+                title="Aktifkan kontras tinggi"
+            >
 
-                <button
-                    type="button"
-                    id="contrastButton"
-                    class="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-blue-200 bg-white px-4 py-2 text-sm font-bold text-[#12326b] shadow-sm transition hover:border-blue-500 hover:bg-blue-50"
-                    aria-label="Aktifkan kontras tinggi"
-                    aria-pressed="false"
-                    title="Aktifkan kontras tinggi"
+                <span
+                    class="text-xl"
+                    aria-hidden="true"
                 >
+                    ◐
+                </span>
 
-                    <span
-                        class="text-xl"
-                        aria-hidden="true"
-                    >
-                        ◐
-                    </span>
+                <span>
+                    Kontras Tinggi
+                </span>
 
-                    <span>
-                        Kontras Tinggi
-                    </span>
+            </button>
 
-                </button>
-
-            </div>
-
-        </header>
-
+        </div>
 
 
         <!-- =====================================================
@@ -308,7 +297,6 @@
         ====================================================== -->
 
         <main>
-
 
             <!-- =================================================
                  INTRO
@@ -319,8 +307,6 @@
                 aria-labelledby="page-title"
             >
 
-
-
                 <h1
                     id="page-title"
                     class="register-heading text-4xl font-extrabold tracking-tight text-[#172b4d] lg:text-5xl"
@@ -328,14 +314,12 @@
                     Buat Akun Pemohon
                 </h1>
 
-
                 <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526581] lg:text-lg">
                     Daftarkan akun untuk mengajukan registrasi produk
                     BPOM secara online dengan mudah dan aman.
                 </p>
 
             </section>
-
 
 
             <!-- =================================================
@@ -353,7 +337,6 @@
                 >
                     Formulir Pendaftaran Akun
                 </h2>
-
 
 
                 <!-- =================================================
@@ -422,7 +405,6 @@
                 @endif
 
 
-
                 <!-- =================================================
                      INFO
                 ================================================== -->
@@ -472,7 +454,6 @@
                 </div>
 
 
-
                 <!-- =================================================
                      FORM
                 ================================================== -->
@@ -485,7 +466,6 @@
                 >
 
                     @csrf
-
 
 
                     <!-- =============================================
@@ -589,7 +569,6 @@
                         @enderror
 
                     </div>
-
 
 
                     <!-- =============================================
@@ -696,7 +675,6 @@
                     </div>
 
 
-
                     <!-- =============================================
                          PHONE
                     ============================================== -->
@@ -798,7 +776,6 @@
                         @enderror
 
                     </div>
-
 
 
                     <!-- =============================================
@@ -992,7 +969,6 @@
                     </div>
 
 
-
                     <!-- =============================================
                          CONFIRM PASSWORD
                     ============================================== -->
@@ -1038,7 +1014,7 @@
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 002-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                                     />
 
                                 </svg>
@@ -1130,7 +1106,6 @@
                     </div>
 
 
-
                     <!-- =============================================
                          SUBMIT
                     ============================================== -->
@@ -1165,7 +1140,6 @@
                     </button>
 
                 </form>
-
 
 
                 <!-- =================================================
@@ -1221,7 +1195,6 @@
                 </div>
 
 
-
                 <!-- Back -->
 
                 <div class="mt-7 text-center">
@@ -1255,7 +1228,6 @@
                 </div>
 
             </section>
-
 
 
             <!-- =================================================
@@ -1299,9 +1271,7 @@
                 </div>
 
 
-
                 <div class="grid gap-3 sm:grid-cols-3">
-
 
                     <!-- Keyboard -->
 
@@ -1351,7 +1321,6 @@
                     </div>
 
 
-
                     <!-- Visual -->
 
                     <div
@@ -1397,7 +1366,6 @@
                         </p>
 
                     </div>
-
 
 
                     <!-- Screen Reader -->
@@ -1447,7 +1415,6 @@
         </main>
 
 
-
         <!-- =====================================================
              FOOTER
         ====================================================== -->
@@ -1471,7 +1438,6 @@
 </div>
 
 
-
 <!-- =========================================================
      JAVASCRIPT
 ========================================================= -->
@@ -1479,7 +1445,6 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
-
 
     /* ========================================================
        SHOW / HIDE PASSWORD
@@ -1566,7 +1531,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     });
-
 
 
     /* ========================================================
@@ -1667,27 +1631,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     /* ========================================================
        PASSWORD CONFIRMATION
     ======================================================== */
 
     const confirmation =
-        document.getElementById(
-            'password_confirmation'
-        );
+        document.getElementById('password_confirmation');
 
     const matchMessage =
-        document.getElementById(
-            'password-match'
-        );
+        document.getElementById('password-match');
 
 
     function checkPasswordMatch() {
 
         if (
             !confirmation ||
-            !matchMessage
+            !matchMessage ||
+            !password
         ) {
             return;
         }
@@ -1759,7 +1719,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     /* ========================================================
        FONT SIZE ACCESSIBILITY
 
@@ -1769,9 +1728,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ======================================================== */
 
     const fontSizeButton =
-        document.getElementById(
-            'fontSizeButton'
-        );
+        document.getElementById('fontSizeButton');
 
 
     let fontSizeLevel = 0;
@@ -1878,15 +1835,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     /* ========================================================
        HIGH CONTRAST
     ======================================================== */
 
     const contrastButton =
-        document.getElementById(
-            'contrastButton'
-        );
+        document.getElementById('contrastButton');
 
 
     if (contrastButton) {

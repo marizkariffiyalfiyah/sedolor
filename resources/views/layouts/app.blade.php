@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -19,11 +19,21 @@
         'resources/js/app.js'
     ])
 
+    <style>
+    [x-cloak] { display: none !important; }
+</style>
 </head>
 
 <body class="min-h-screen">
 
+    {{-- Navbar --}}
+    @include('layouts.header')
+
+    {{-- Content --}}
     @yield('content')
+
+    {{-- Footer --}}
+    @include('layouts.footer')
 
 </body>
 

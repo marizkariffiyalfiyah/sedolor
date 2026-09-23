@@ -9,53 +9,77 @@ use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\Pendaftaran\ProductRegistrationController;
 use Illuminate\Support\Facades\Route;
 
-// ======================================================================
-// BERANDA & INFORMASI PRODUK (PUBLIK)
-// ======================================================================
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| BERANDA & INFORMASI PUBLIK
+|--------------------------------------------------------------------------
+*/
 
+// Beranda
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+
+// Informasi produk
 Route::get('/informasi-produk', [HomeController::class, 'informasiProduk'])
     ->name('informasi-produk');
 
 
-// ======================================================================
-// AKSESIBILITAS
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| AKSESIBILITAS
+|--------------------------------------------------------------------------
+|
+| Pengaturan aksesibilitas dapat digunakan dari halaman publik.
+|
+*/
 
 Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
     ->name('aksesibilitas.update');
 
 
-// ======================================================================
-// AUTH
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATION
+|--------------------------------------------------------------------------
+|
+| Daftar dan login hanya dapat diakses oleh pengguna yang belum login.
+|
+*/
 
 Route::middleware('guest')->group(function () {
 
-    // ------------------------------------------------------------------
-    // DAFTAR AKUN
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | DAFTAR AKUN
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/daftar', [AuthController::class, 'showRegister'])
         ->name('register');
 
-    Route::post('/daftar', [AuthController::class, 'register']);
+    Route::post('/daftar', [AuthController::class, 'register'])
+        ->name('register.process');
 
 
-    // ------------------------------------------------------------------
-    // LOGIN
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
 
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.process');
 
 
-    // ------------------------------------------------------------------
-    // LUPA KATA SANDI
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | LUPA KATA SANDI
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/lupa-kata-sandi', [AuthController::class, 'showForgotPassword'])
         ->name('password.request');
@@ -63,9 +87,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
         ->name('password.email');
 
-    // ------------------------------------------------------------------
-    // RESET KATA SANDI
-    // ------------------------------------------------------------------
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET KATA SANDI
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
         ->name('password.reset');
@@ -75,83 +102,118 @@ Route::middleware('guest')->group(function () {
 });
 
 
-// ======================================================================
-// LOGOUT
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| LOGOUT
+|--------------------------------------------------------------------------
+*/
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
 
-// ======================================================================
-// AREA PEMOHON
-// HARUS LOGIN
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| AREA PEMOHON
+|--------------------------------------------------------------------------
+|
+| Semua fitur yang membutuhkan akun:
+| - Dashboard
+| - Pendaftaran produk
+| - Monitoring
+|
+| Pengguna hanya wajib login.
+| Tidak menggunakan verifikasi email.
+|
+*/
 
 Route::middleware(['auth'])->group(function () {
 
-    // ------------------------------------------------------------------
-    // DASHBOARD
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | DASHBOARD
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
 
-    // ------------------------------------------------------------------
-    // PENDAFTARAN PRODUK
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | PENDAFTARAN PRODUK
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('pendaftaran')
         ->name('pendaftaran.')
         ->group(function () {
 
+            // Mulai pendaftaran
             Route::get('/mulai', [
                 ProductRegistrationController::class,
                 'mulai'
             ])->name('mulai');
 
+
+            // Form usaha
             Route::get('/{product}/usaha', [
                 ProductRegistrationController::class,
                 'formUsaha'
             ])->name('usaha');
 
+
+            // Simpan usaha
             Route::post('/{product}/usaha', [
                 ProductRegistrationController::class,
                 'simpanUsaha'
-            ]);
+            ])->name('usaha.simpan');
 
+
+            // Form produk
             Route::get('/{product}/produk', [
                 ProductRegistrationController::class,
                 'formProduk'
             ])->name('produk');
 
+
+            // Simpan produk
             Route::post('/{product}/produk', [
                 ProductRegistrationController::class,
                 'simpanProduk'
-            ]);
+            ])->name('produk.simpan');
 
+
+            // Form dokumen
             Route::get('/{product}/dokumen', [
                 ProductRegistrationController::class,
                 'formDokumen'
             ])->name('dokumen');
 
+
+            // Simpan dokumen
             Route::post('/{product}/dokumen', [
                 ProductRegistrationController::class,
                 'simpanDokumen'
-            ]);
+            ])->name('dokumen.simpan');
 
+
+            // Hapus dokumen
             Route::delete('/{product}/dokumen/{document}', [
                 ProductRegistrationController::class,
                 'hapusDokumen'
             ])->name('dokumen.hapus');
 
+
+            // Periksa pendaftaran
             Route::get('/{product}/periksa', [
                 ProductRegistrationController::class,
                 'periksa'
             ])->name('periksa');
 
+
+            // Kirim pendaftaran
             Route::post('/{product}/kirim', [
                 ProductRegistrationController::class,
                 'kirim'
@@ -159,14 +221,17 @@ Route::middleware(['auth'])->group(function () {
         });
 
 
-    // ------------------------------------------------------------------
-    // MONITORING
-    // ------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | MONITORING
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/monitoring', [
         MonitoringController::class,
         'index'
     ])->name('monitoring.index');
+
 
     Route::get('/monitoring/{product}', [
         MonitoringController::class,
@@ -175,37 +240,55 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-// ======================================================================
-// AREA VERIFIKATOR BPOM
-// HARUS LOGIN & MEMILIKI ROLE VERIFIKATOR
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| AREA VERIFIKATOR BPOM
+|--------------------------------------------------------------------------
+|
+| Hanya dapat diakses oleh:
+| - pengguna yang sudah login
+| - memiliki role verifikator
+|
+| Tidak menggunakan middleware verified karena
+| verifikasi email sudah dihapus.
+|
+*/
 
 Route::middleware(['auth', 'verifikator'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
+        // Daftar pengajuan yang perlu diverifikasi
         Route::get('/verifikasi', [
             VerifikasiController::class,
             'index'
         ])->name('verifikasi.index');
 
+
+        // Detail pengajuan
         Route::get('/verifikasi/{product}', [
             VerifikasiController::class,
             'show'
         ])->name('verifikasi.show');
 
+
+        // Proses verifikasi
         Route::post('/verifikasi/{product}', [
             VerifikasiController::class,
             'update'
         ])->name('verifikasi.update');
-    });
+});
 
 
-// ======================================================================
-// DEMO MONITORING
-// KHUSUS UNTUK MELIHAT TAMPILAN TANPA DATABASE
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| DEMO MONITORING
+|--------------------------------------------------------------------------
+|
+| Khusus untuk melihat tampilan monitoring tanpa database.
+|
+*/
 
 Route::get('/demo-monitoring-index', function () {
 
@@ -227,7 +310,10 @@ Route::get('/demo-monitoring-index', function () {
 
     $products = [$product1, $product2];
 
-    return view('monitoring.index', compact('products'));
+    return view(
+        'monitoring.index',
+        compact('products')
+    );
 });
 
 
@@ -244,15 +330,18 @@ Route::get('/demo-monitoring-show', function () {
         },
 
         'statusHistories' => [
+
             (object) [
                 'status' => 'pendaftaran_diajukan',
-                'keterangan' => 'Berkas pendaftaran awal berhasil diterima oleh sistem.',
+                'keterangan' =>
+                    'Berkas pendaftaran awal berhasil diterima oleh sistem.',
                 'created_at' => now()->subDays(2)
             ],
 
             (object) [
                 'status' => 'sedang_diproses',
-                'keterangan' => 'Berkas sedang dalam tahap peninjauan oleh tim verifikator.',
+                'keterangan' =>
+                    'Berkas sedang dalam tahap peninjauan oleh tim verifikator.',
                 'created_at' => now()
             ]
         ]
@@ -262,19 +351,29 @@ Route::get('/demo-monitoring-show', function () {
 
     return view(
         'monitoring.show',
-        compact('product', 'documents')
+        compact(
+            'product',
+            'documents'
+        )
     );
 });
 
 
-// ======================================================================
-// DEMO DASHBOARD
-// KHUSUS UNTUK DESAIN DASHBOARD TANPA LOGIN
-// ======================================================================
+/*
+|--------------------------------------------------------------------------
+| DEMO DASHBOARD
+|--------------------------------------------------------------------------
+|
+| Khusus desain tanpa login.
+|
+*/
 
 Route::get('/dashboard-demo', function () {
 
     $products = collect();
 
-    return view('dashboard', compact('products'));
+    return view(
+        'dashboard',
+        compact('products')
+    );
 });
