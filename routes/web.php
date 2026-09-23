@@ -43,7 +43,8 @@ Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
 | AUTHENTICATION
 |--------------------------------------------------------------------------
 |
-| Daftar dan login hanya dapat diakses oleh pengguna yang belum login.
+| Daftar, login, dan lupa kata sandi hanya dapat diakses
+| oleh pengguna yang belum login.
 |
 */
 
@@ -86,20 +87,25 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
         ->name('password.email');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | RESET KATA SANDI
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
-        ->name('password.reset');
-
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])
-        ->name('password.update');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| RESET KATA SANDI
+|--------------------------------------------------------------------------
+|
+| Route reset password TIDAK menggunakan middleware guest.
+| Dengan begitu, link reset dari email tetap dapat dibuka
+| meskipun user masih memiliki session login.
+|
+*/
+
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->name('password.update');
 
 
 /*
@@ -376,4 +382,25 @@ Route::get('/dashboard-demo', function () {
         'dashboard',
         compact('products')
     );
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| FORCE LOGOUT - SEMENTARA UNTUK TESTING
+|--------------------------------------------------------------------------
+|
+| Digunakan untuk membersihkan session login yang masih tersimpan.
+| HAPUS ROUTE INI SETELAH TESTING SELESAI.
+|
+*/
+
+Route::get('/force-logout', function (Illuminate\Http\Request $request) {
+
+    auth()->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');
 });
