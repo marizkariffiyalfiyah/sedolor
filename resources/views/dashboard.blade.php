@@ -2592,7 +2592,7 @@
                         <div class="welcome-actions">
 
                             <a
-                                href="{{ route('pendaftaran.mulai') }}"
+                                href="{{ route('informasi-produk') }}"
                                 class="welcome-button welcome-button-primary"
                             >
 

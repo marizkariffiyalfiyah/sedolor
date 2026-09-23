@@ -2780,7 +2780,7 @@
 
 
                         <a
-                            href="{{ route('login') }}"
+                            href="{{ route('informasi-produk') }}"
                             class="service-link"
                         >
 

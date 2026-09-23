@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Masuk')
+@section('title', 'Verifikasi Email')
 
 @section('content')
 
-<!-- Background bergradasi halus agar area luar kartu login memiliki kontras yang pas -->
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Background bergradasi halus disesuaikan persis dengan halaman Login -->
 <div class="min-h-screen bg-gradient-to-b from-slate-200/70 via-slate-100 to-slate-200/80 flex items-center justify-center px-4 py-10">
 
     <div class="w-full max-w-md">
@@ -18,279 +21,125 @@
             </div>
 
             <h1 class="mt-5 text-3xl font-bold text-slate-900">
-                Selamat Datang
+                Verifikasi Email
             </h1>
 
             <p class="mt-2 text-sm text-slate-600">
-                Masuk ke akun Anda untuk melanjutkan pendaftaran produk.
+                Langkah terakhir sebelum mengakses portal pendaftaran.
             </p>
 
         </div>
 
-        <!-- Login Card: Kotak luar form dibuat lebih kontras menggunakan border lebih tebal dan bayangan yang lebih kuat -->
-        <div class="bg-white border-2 border-slate-300 rounded-2xl shadow-2xl p-7 sm:p-8">
+        <!-- Verification Card -->
+        <div class="bg-white border-2 border-slate-300 rounded-2xl shadow-2xl p-7 sm:p-8 text-center">
 
-            <!-- Error Notification -->
-            @if ($errors->any())
-                <div
-                    class="mb-6 rounded-xl border border-red-300 bg-red-50 px-4 py-3"
-                    role="alert"
-                    aria-live="assertive"
-                >
+            <!-- Notification Link Sent -->
+            @if (session('status') == 'verification-link-sent')
+                <div class="mb-6 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-left" role="alert">
                     <div class="flex items-start gap-3">
-
-                        <div class="flex-shrink-0 text-red-700 text-lg" aria-hidden="true">
+                        <div class="flex-shrink-0 text-emerald-600 text-lg">
                             <svg class="w-5 h-5 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-
                         <div>
-                            <p class="text-sm font-bold text-red-900">
-                                Gagal masuk
+                            <p class="text-sm font-bold text-emerald-900">
+                                Tautan Berhasil Dikirim!
                             </p>
-
-                            <ul class="mt-1 space-y-1 text-sm text-red-800 list-disc list-inside">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                            <p class="text-xs text-emerald-800 mt-0.5">
+                                Tautan verifikasi baru telah dikirimkan ke alamat email Anda.
+                            </p>
                         </div>
-
                     </div>
                 </div>
             @endif
 
-            <!-- Form -->
-            <form
-                method="POST"
-                action="{{ route('login') }}"
-                class="space-y-5"
-            >
+            <!-- Icon Email -->
+            <div class="my-4">
+                <div class="mx-auto w-20 h-20 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-inner">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+            </div>
 
-                @csrf
+            <h2 class="text-xl font-bold text-slate-900 mb-2">
+                Terima kasih telah mendaftar!
+            </h2>
 
-                <!-- Email -->
-                <div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                Kami telah mengirimkan link verifikasi ke email Anda. Silakan periksa kotak masuk atau folder <span class="font-bold text-slate-700">Spam</span> untuk menyelesaikan pendaftaran.
+            </p>
 
-                    <label
-                        for="email"
-                        class="block mb-2 text-sm font-bold text-slate-800"
+            <!-- Kirim Ulang Email Form -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl mb-6">
+                <p class="text-xs font-semibold text-slate-600 mb-3">
+                    Belum menerima email verifikasi?
+                </p>
+
+                <form method="POST" action="{{ route('verification.send') }}">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="w-full py-3 px-4 rounded-xl bg-blue-700 text-white font-bold text-sm shadow-md transition hover:bg-blue-800 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
                     >
-                        Email <span class="text-red-600" aria-hidden="true">*</span>
-                    </label>
-
-                    <div class="relative">
-
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
-                            aria-hidden="true"
-                        >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </span>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            required
-                            autofocus
-                            autocomplete="email"
-                            placeholder="nama@email.com"
-                            class="w-full pl-11 pr-4 py-3.5
-                                   rounded-xl border-2 border-slate-300
-                                   bg-slate-50 text-slate-900 font-medium
-                                   placeholder-slate-400
-                                   outline-none
-                                   transition
-                                   focus:bg-white
-                                   focus:border-blue-700
-                                   focus:ring-4 focus:ring-blue-100"
-                        >
-
-                    </div>
-
-                    @error('email')
-                        <p class="mt-2 text-sm font-semibold text-red-700">
-                            {{ $message }}
-                        </p>
-                    @enderror
-
-                </div>
-
-                <!-- Password -->
-                <div>
-
-                    <label
-                        for="password"
-                        class="block mb-2 text-sm font-bold text-slate-800"
-                    >
-                        Kata Sandi <span class="text-red-600" aria-hidden="true">*</span>
-                    </label>
-
-                    <div class="relative">
-
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
-                            aria-hidden="true"
-                        >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
-                        </span>
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            required
-                            autocomplete="current-password"
-                            placeholder="••••••••"
-                            class="w-full pl-11 pr-4 py-3.5
-                                   rounded-xl border-2 border-slate-300
-                                   bg-slate-50 text-slate-900 font-medium
-                                   placeholder-slate-400
-                                   outline-none
-                                   transition
-                                   focus:bg-white
-                                   focus:border-blue-700
-                                   focus:ring-4 focus:ring-blue-100"
-                        >
-
-                    </div>
-
-                    @error('password')
-                        <p class="mt-2 text-sm font-semibold text-red-700">
-                            {{ $message }}
-                        </p>
-                    @enderror
-
-                </div>
-
-                <!-- Remember Me -->
-                <div class="flex items-center">
-
-                    <label class="inline-flex items-center gap-3 cursor-pointer select-none">
-
-                        <input
-                            type="checkbox"
-                            name="remember"
-                            id="remember"
-                            class="w-5 h-5 rounded border-2 border-slate-400
-                                   text-blue-700
-                                   focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 cursor-pointer"
-                        >
-
-                        <span class="text-sm font-semibold text-slate-700">
-                            Ingat saya di perangkat ini
-                        </span>
-
-                    </label>
-
-                </div>
-
-                <!-- Button Submit -->
-                <button
-                    type="submit"
-                    class="w-full py-3.5 px-5
-                           rounded-xl
-                           bg-blue-700
-                           text-white
-                           font-bold text-base
-                           shadow-md
-                           transition
-                           hover:bg-blue-800
-                           hover:shadow-lg
-                           focus:outline-none
-                           focus:ring-4
-                           focus:ring-blue-300"
-                >
-                    Masuk ke Akun
-                </button>
-
-            </form>
+                        Kirim Ulang Email Verifikasi
+                    </button>
+                </form>
+            </div>
 
             <!-- Divider -->
-            <div class="relative my-7">
-
+            <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t-2 border-slate-300"></div>
+                    <div class="w-full border-t border-slate-300"></div>
                 </div>
-
                 <div class="relative flex justify-center">
-                    <span class="bg-white px-4 text-xs font-bold text-slate-500 tracking-wider">
-                        BELUM MEMILIKI AKUN?
+                    <span class="bg-white px-3 text-xs font-bold text-slate-400">
+                        ATAU
                     </span>
                 </div>
-
             </div>
 
-            <!-- Register Link Button -->
-            <a
-                href="{{ route('register') }}"
-                class="w-full flex items-center justify-center
-                       py-3.5 px-5
-                       rounded-xl
-                       border-2 border-slate-300
-                       bg-slate-100
-                       text-slate-800
-                       font-bold
-                       transition
-                       hover:bg-slate-200
-                       hover:border-slate-400
-                       focus:outline-none
-                       focus:ring-4
-                       focus:ring-slate-300"
-            >
-                Daftar Akun Pemohon
-            </a>
-
-        </div>
-
-        <!-- Accessibility Info Badge -->
-        <div class="mt-6 text-center">
-
-            <div class="inline-flex items-center gap-2
-                        px-4 py-2
-                        rounded-full
-                        bg-white
-                        border border-slate-300
-                        shadow-sm
-                        text-xs font-semibold text-slate-700">
-
-                <svg class="w-4 h-4 text-blue-700" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v6h6v-2h-4z"/>
-                </svg>
-
-                <span>
-                    Portal mendukung fitur aksesibilitas penuh
-                </span>
-
-            </div>
+            <!-- Logout Form -->
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button
+                    type="submit"
+                    class="w-full py-3 px-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 font-bold text-sm transition hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-4 focus:ring-red-200"
+                >
+                    Keluar / Ganti Akun
+                </button>
+            </form>
 
         </div>
 
         <!-- Back Button -->
         <div class="mt-5 text-center">
-
             <a
                 href="/"
-                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg
-                       text-sm font-semibold text-slate-700 bg-white/80 border border-slate-300
-                       hover:text-blue-700 hover:bg-white hover:border-slate-400
-                       shadow-xs transition"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white/80 border border-slate-300 hover:text-blue-700 hover:bg-white hover:border-slate-400 shadow-xs transition"
             >
                 <span>←</span>
                 <span>Kembali ke Beranda</span>
             </a>
-
         </div>
 
     </div>
 
 </div>
+
+<!-- Pop-up Notifikasi SweetAlert jika link dikirim ulang -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        @if(session('status') == 'verification-link-sent')
+            Swal.fire({
+                icon: 'success',
+                title: 'Tautan Terkirim!',
+                text: 'Silakan periksa folder masuk atau spam di email Anda.',
+                confirmColor: '#1d4ed8'
+            });
+        @endif
+    });
+</script>
 
 @endsection
