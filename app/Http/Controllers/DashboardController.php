@@ -1,15 +1,19 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $products = $request->user()->products()->latest()->get();
+        // Pastikan TIDAK ADA logika seperti ini:
+        // if (auth()->check()) { return redirect()->route('monitoring.index'); }
+
+        // Kembalikan view dashboard publik secara langsung
+        $products = collect(); 
 
         return view('dashboard', compact('products'));
     }
 }
+?>

@@ -2,21 +2,41 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Product;
 
+<<<<<<< HEAD
 #[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
+=======
+class User extends Authenticatable implements MustVerifyEmail
+>>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    /**
+     * Atribut yang boleh diisi melalui mass assignment.
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'password',
+        'role',
+    ];
+
+    /**
+     * Atribut yang disembunyikan saat model diubah menjadi array/JSON.
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
      * Relasi User dengan Product.
@@ -28,6 +48,7 @@ class User extends Authenticatable
     }
 
     /**
+<<<<<<< HEAD
      * Cek apakah user memiliki peran sebagai verifikator/admin.
      */
     public function isVerifikator(): bool
@@ -39,6 +60,17 @@ class User extends Authenticatable
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+=======
+     * Mengecek apakah user merupakan verifikator.
+     */
+    public function isVerifikator(): bool
+    {
+        return $this->role === 'verifikator';
+    }
+
+    /**
+     * Attribute casting.
+>>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
      */
     protected function casts(): array
     {
