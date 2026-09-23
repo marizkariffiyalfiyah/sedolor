@@ -118,6 +118,794 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
+        </section>
+
+
+        {{-- =================================================
+             ACCESSIBILITY
+             ================================================= --}}
+
+        <section
+            class="accessibility-section"
+            id="aksesibilitas"
+        >
+
+            <div class="sedolor-container">
+
+                <div class="accessibility-box reveal">
+
+
+                    <div class="accessibility-heading">
+
+                        <div
+                            class="accessibility-icon-large"
+                            aria-hidden="true"
+                        >
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="4"
+                                    r="2"
+                                ></circle>
+
+                                <path
+                                    d="M5 8h14"
+                                ></path>
+
+                                <path
+                                    d="M12 6v7"
+                                ></path>
+
+                                <path
+                                    d="M8 21l4-8 4 8"
+                                ></path>
+
+                                <path
+                                    d="M8 13l-3 4"
+                                ></path>
+
+                                <path
+                                    d="M16 13l3 4"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <h2>
+                            Aksesibilitas
+                        </h2>
+
+
+                        <p>
+                            Sesuaikan tampilan SEDOLOR agar
+                            lebih nyaman sesuai kebutuhan Anda.
+                        </p>
+
+                    </div>
+
+
+                    <div class="accessibility-tools">
+
+
+                        <button
+                            type="button"
+                            class="accessibility-tool reveal reveal-delay-1"
+                            id="fontToggle"
+                            aria-pressed="false"
+                        >
+
+                            <span
+                                class="tool-icon"
+                                aria-hidden="true"
+                            >
+
+                                <svg
+                                    class="icon"
+                                    viewBox="0 0 24 24"
+                                >
+
+                                    <path
+                                        d="M4 19L9 5h2l5 14"
+                                    ></path>
+
+                                    <path
+                                        d="M6 14h8"
+                                    ></path>
+
+                                    <path
+                                        d="M17 8h4"
+                                    ></path>
+
+                                    <path
+                                        d="M19 6v4"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span class="tool-name">
+                                Perbesar Teks
+                            </span>
+
+
+                            <span class="tool-desc">
+                                Membuat tulisan lebih mudah dibaca.
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="accessibility-tool reveal reveal-delay-2"
+                            id="contrastToggle"
+                            aria-pressed="false"
+                        >
+
+                            <span
+                                class="tool-icon"
+                                aria-hidden="true"
+                            >
+
+                                <svg
+                                    class="icon"
+                                    viewBox="0 0 24 24"
+                                >
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                    ></circle>
+
+                                    <path
+                                        d="M12 3a9 9 0 0 1 0 18z"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span class="tool-name">
+                                Kontras Tinggi
+                            </span>
+
+
+                            <span class="tool-desc">
+                                Tingkatkan perbedaan warna.
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="accessibility-tool reveal reveal-delay-3"
+                            id="readToggle"
+                            aria-pressed="false"
+                        >
+
+                            <span
+                                class="tool-icon"
+                                aria-hidden="true"
+                            >
+
+                                <svg
+                                    class="icon"
+                                    viewBox="0 0 24 24"
+                                >
+
+                                    <path
+                                        d="M4 10v4h4l5 4V6l-5 4H4z"
+                                    ></path>
+
+                                    <path
+                                        d="M16 9a4 4 0 0 1 0 6"
+                                    ></path>
+
+                                    <path
+                                        d="M18.5 6.5a8 8 0 0 1 0 11"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span class="tool-name">
+                                Baca Halaman
+                            </span>
+
+
+                            <span class="tool-desc">
+                                Membacakan isi halaman dengan suara.
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {{-- =================================================
+             SERVICES
+             ================================================= --}}
+
+        <section
+            class="section"
+            id="layanan"
+        >
+
+            <div class="sedolor-container">
+
+
+                <div class="section-header reveal">
+
+                    <span class="section-label">
+                        Layanan
+                    </span>
+
+
+                    <h2 class="section-title">
+                        Layanan BPOM Palembang
+                    </h2>
+
+
+                    <p class="section-description">
+                        Pilih layanan yang sesuai dengan kebutuhan
+                        Anda. Informasi dibuat sederhana agar
+                        mudah dipahami.
+                    </p>
+
+                </div>
+
+
+                <div class="services-grid">
+
+
+                    <article class="service-card reveal">
+
+                        <div
+                            class="service-icon"
+                            aria-hidden="true"
+                        >
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <rect
+                                    x="5"
+                                    y="3"
+                                    width="14"
+                                    height="18"
+                                    rx="2"
+                                ></rect>
+
+                                <path
+                                    d="M9 8h6"
+                                ></path>
+
+                                <path
+                                    d="M9 12h6"
+                                ></path>
+
+                                <path
+                                    d="M9 16h4"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="service-title">
+                            Pendaftaran Layanan
+                        </h3>
+
+
+                        <p class="service-description">
+                            Ajukan permohonan layanan BPOM sesuai
+                            dengan kebutuhan Anda melalui SEDOLOR.
+                        </p>
+
+
+                        <a
+                            href="{{ route('informasi-produk') }}"
+                            class="service-link"
+                        >
+
+                            Daftar Layanan
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                ></path>
+
+                                <path
+                                    d="M13 6l6 6-6 6"
+                                ></path>
+
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+
+                    <article class="service-card reveal reveal-delay-1">
+
+                        <div
+                            class="service-icon"
+                            aria-hidden="true"
+                        >
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                ></circle>
+
+                                <path
+                                    d="M12 10v6"
+                                ></path>
+
+                                <path
+                                    d="M12 7h.01"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="service-title">
+                            Informasi Layanan
+                        </h3>
+
+
+                        <p class="service-description">
+                            Temukan informasi mengenai jenis layanan,
+                            persyaratan, dan hal yang perlu disiapkan
+                            sebelum datang ke BPOM.
+                        </p>
+
+
+                        <a
+                            href="{{ route('informasi-produk') }}"
+                            class="service-link"
+                        >
+
+                            Lihat informasi
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                ></path>
+
+                                <path
+                                    d="M13 6l6 6-6 6"
+                                ></path>
+
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+
+                    <article class="service-card reveal reveal-delay-2">
+
+                        <div
+                            class="service-icon"
+                            aria-hidden="true"
+                        >
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                ></rect>
+
+                                <path
+                                    d="M16 3v4"
+                                ></path>
+
+                                <path
+                                    d="M8 3v4"
+                                ></path>
+
+                                <path
+                                    d="M3 10h18"
+                                ></path>
+
+                                <path
+                                    d="M8 14h.01"
+                                ></path>
+
+                                <path
+                                    d="M12 14h.01"
+                                ></path>
+
+                                <path
+                                    d="M16 14h.01"
+                                ></path>
+
+                                <path
+                                    d="M8 18h.01"
+                                ></path>
+
+                                <path
+                                    d="M12 18h.01"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="service-title">
+                            Jadwal & Antrean
+                        </h3>
+
+
+                        <p class="service-description">
+                            Lihat jadwal pertemuan, jam layanan,
+                            dan nomor antrean yang Anda dapatkan
+                            setelah melakukan pendaftaran.
+                        </p>
+
+
+                        <a
+                            href="{{ route('login') }}"
+                            class="service-link"
+                        >
+
+                            Cek Jadwal & Antrean
+
+                            <svg
+                                class="icon"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                ></path>
+
+                                <path
+                                    d="M13 6l6 6-6 6"
+                                ></path>
+
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {{-- =================================================
+             HOW IT WORKS
+             ================================================= --}}
+
+        <section
+            class="section section-alt"
+            id="cara-kerja"
+        >
+
+            <div class="sedolor-container">
+
+
+                <div class="section-header reveal">
+
+                    <span class="section-label">
+                        Cara Menggunakan
+                    </span>
+
+
+                    <h2 class="section-title">
+                        Sederhana dalam 3 langkah
+                    </h2>
+
+
+                    <p class="section-description">
+                        SEDOLOR dirancang agar masyarakat dapat
+                        memperoleh layanan dengan alur yang
+                        sederhana dan mudah dipahami.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+
+                    <article class="step reveal">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+
+                        <h3 class="step-title">
+                            Buat akun & daftar
+                        </h3>
+
+
+                        <p class="step-text">
+                            Buat akun terlebih dahulu, kemudian
+                            lakukan pendaftaran layanan sesuai
+                            dengan kebutuhan Anda.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step reveal reveal-delay-1">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+
+                        <h3 class="step-title">
+                            Dapatkan jadwal & antrean
+                        </h3>
+
+
+                        <p class="step-text">
+                            Setelah pendaftaran diproses, Anda
+                            mendapatkan informasi hari, jam
+                            pertemuan, dan nomor antrean melalui
+                            WhatsApp.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step reveal reveal-delay-2">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+
+                        <h3 class="step-title">
+                            Datang sesuai jadwal
+                        </h3>
+
+
+                        <p class="step-text">
+                            Datang ke BPOM Palembang sesuai
+                            hari, jam, dan nomor antrean yang
+                            telah diberikan.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {{-- =================================================
+             CTA
+             ================================================= --}}
+
+        <section class="cta-section">
+
+            <div class="sedolor-container">
+
+                <div class="cta reveal">
+
+                    <div class="cta-content">
+
+                        <h2>
+                            Siap menggunakan layanan SEDOLOR?
+                        </h2>
+
+
+                        <p>
+                            Masuk ke akun Anda untuk melakukan
+                            pendaftaran layanan BPOM Palembang
+                            dan memperoleh informasi jadwal serta
+                            nomor antrean.
+                        </p>
+
+
+                        <a
+                            href="{{ route('login') }}"
+                            class="sedolor-btn cta-button"
+                        >
+
+                            Masuk ke SEDOLOR
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    {{-- =====================================================
+         FOOTER
+         ===================================================== --}}
+
+    <footer class="sedolor-footer">
+
+        <div class="sedolor-container">
+
+
+            <div class="footer-grid">
+
+
+                <div class="footer-brand">
+
+                    <div
+                        class="footer-brand-mark"
+                        style="
+                            background: white;
+                            padding: 4px;
+                        "
+                    >
+
+                        <img
+                            src="{{ asset('assets/logosedolor.png') }}"
+                            alt="Logo SEDOLOR"
+                            style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                                border-radius: 6px;
+                            "
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            SEDOLOR
+                        </strong>
+
+
+                        <p>
+                            SEDOLOR merupakan layanan digital
+                            yang membantu masyarakat memperoleh
+                            informasi dan mengakses layanan BPOM
+                            Palembang dengan lebih mudah.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="footer-title">
+                        Navigasi
+                    </h3>
+
+
+                    <div class="footer-links">
+
+                        <a href="{{ route('home') }}">
+                            Beranda
+                        </a>
+
+
+                        <a href="#layanan">
+                            Layanan
+                        </a>
+
+
+                        <a href="#cara-kerja">
+                            Cara Menggunakan
+                        </a>
+
+
+                        <a href="{{ route('informasi-produk') }}">
+                            Informasi
+                        </a>
+
+
+                        <a href="#aksesibilitas">
+                            Aksesibilitas
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="footer-title">
+                        Akun
+                    </h3>
+
+
+                    <div class="footer-links">
+
+                        <a href="{{ route('login') }}">
+                            Masuk ke SEDOLOR
+                        </a>
+
+
+                        <a href="{{ route('register') }}">
+                            Daftar Akun
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+
+                    © {{ date('Y') }} SEDOLOR.
+                    Layanan Digital BPOM Palembang.
+
+=======
         </div>
     </div>
 </section>
@@ -127,6 +915,7 @@
             <div class="max-w-[700px] mb-[34px]">
                 <span class="inline-flex items-center gap-[7px] mb-[10px] px-[12px] py-[7px] rounded-full bg-[#155EEF]/10 text-[#155EEF] text-xs font-black uppercase tracking-wider">
                     Layanan Utama
+>>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
                 </span>
                 <h2 class="m-0 mb-[10px] text-[#102A43] text-[31px] font-black leading-tight">Kemudahan Dalam Satu Pintu</h2>
                 <p class="m-0 text-[#5B6B7D] text-[15px] leading-relaxed">Pilih jenis layanan publik sesuai dengan kebutuhan informasi atau perizinan Anda.</p>
