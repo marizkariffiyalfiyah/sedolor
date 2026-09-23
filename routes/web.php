@@ -7,8 +7,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\Pendaftaran\ProductRegistrationController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,23 +23,6 @@ Route::get('/', [HomeController::class, 'index'])
 // Informasi produk
 Route::get('/informasi-produk', [HomeController::class, 'informasiProduk'])
     ->name('informasi-produk');
-
-
-/*
-|--------------------------------------------------------------------------
-| DASHBOARD PUBLIK
-|--------------------------------------------------------------------------
-|
-| Dashboard dapat diakses tanpa login.
-| Digunakan untuk:
-| - Informasi
-| - Aksesibilitas
-| - Informasi layanan
-|
-*/
-
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
 
 
 /*
@@ -70,7 +51,7 @@ Route::middleware('guest')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | DAFTAR
+    | DAFTAR AKUN
     |--------------------------------------------------------------------------
     */
 
@@ -92,6 +73,32 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.process');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LUPA KATA SANDI
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/lupa-kata-sandi', [AuthController::class, 'showForgotPassword'])
+        ->name('password.request');
+
+    Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
+        ->name('password.email');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET KATA SANDI
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
+        ->name('password.reset');
+
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+        ->name('password.update');
 });
 
 
@@ -108,92 +115,29 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 /*
 |--------------------------------------------------------------------------
-| VERIFIKASI EMAIL
-|--------------------------------------------------------------------------
-|
-| Pengguna yang sudah login tetapi belum melakukan verifikasi
-| akan diarahkan ke halaman verifikasi email.
-|
-*/
-
-
-// Halaman pemberitahuan verifikasi
-Route::get('/verifikasi-email', function () {
-
-    return view('auth.verify-email');
-
-})
-    ->middleware('auth')
-    ->name('verification.notice');
-
-
-// Link verifikasi dari email
-Route::get('/verifikasi-email/{id}/{hash}', function (
-    EmailVerificationRequest $request
-) {
-
-    $request->fulfill();
-
-    return redirect()
-        ->route('dashboard')
-        ->with(
-            'status',
-            'Email berhasil diverifikasi.'
-        );
-
-})
-    ->middleware([
-        'auth',
-        'signed',
-        'throttle:6,1'
-    ])
-    ->name('verification.verify');
-
-
-// Kirim ulang email verifikasi
-Route::post('/verifikasi-email/kirim', function (
-    Request $request
-) {
-
-    if ($request->user()->hasVerifiedEmail()) {
-
-        return redirect()
-            ->route('dashboard');
-    }
-
-    $request->user()
-        ->sendEmailVerificationNotification();
-
-    return back()
-        ->with(
-            'status',
-            'Link verifikasi baru telah dikirim ke email Anda.'
-        );
-
-})
-    ->middleware([
-        'auth',
-        'throttle:6,1'
-    ])
-    ->name('verification.send');
-
-
-/*
-|--------------------------------------------------------------------------
 | AREA PEMOHON
 |--------------------------------------------------------------------------
 |
 | Semua fitur yang membutuhkan akun:
+| - Dashboard
 | - Pendaftaran produk
 | - Monitoring
 |
-| Pengguna wajib:
-| 1. Login
-| 2. Email terverifikasi
+| Pengguna hanya wajib login.
+| Tidak menggunakan verifikasi email.
 |
 */
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | DASHBOARD
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
 
     /*
@@ -205,7 +149,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('pendaftaran')
         ->name('pendaftaran.')
         ->group(function () {
-
 
             // Mulai pendaftaran
             Route::get('/mulai', [
@@ -303,21 +246,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 |
 | Hanya dapat diakses oleh:
-| - pengguna login
-| - email terverifikasi
+| - pengguna yang sudah login
 | - memiliki role verifikator
+|
+| Tidak menggunakan middleware verified karena
+| verifikasi email sudah dihapus.
 |
 */
 
-Route::middleware([
-    'auth',
-    'verified',
-    'verifikator'
-])
+Route::middleware(['auth', 'verifikator'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
 
         // Daftar pengajuan yang perlu diverifikasi
         Route::get('/verifikasi', [
