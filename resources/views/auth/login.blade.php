@@ -1,22 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Verifikasi Email')
+@section('title', 'Login')
 
 @section('content')
 
-<<<<<<< HEAD
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Background bergradasi halus disesuaikan persis dengan halaman Login -->
-<div class="min-h-screen bg-gradient-to-b from-slate-200/70 via-slate-100 to-slate-200/80 flex items-center justify-center px-4 py-10">
-=======
 <style>
     /* =========================================================
        SEDOLOR BPOM - LOGIN
        Desktop First + Responsive
     ========================================================= */
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 
     :root {
         --primary: #155eef;
@@ -28,10 +20,6 @@
         --danger: #b42318;
     }
 
-    /* =========================================================
-       MOBILE
-    ========================================================= */
-
     @media (max-width: 640px) {
         .login-heading {
             font-size: 2rem !important;
@@ -39,48 +27,15 @@
     }
 </style>
 
-<<<<<<< HEAD
-            <h1 class="mt-5 text-3xl font-bold text-slate-900">
-                Verifikasi Email
-            </h1>
-
-            <p class="mt-2 text-sm text-slate-600">
-                Langkah terakhir sebelum mengakses portal pendaftaran.
-            </p>
-=======
-
 <!-- =========================================================
      PAGE
 ========================================================= -->
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 
 <div
     id="loginPage"
     class="login-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 px-5 py-6 sm:px-8 lg:px-12 lg:py-8"
 >
 
-<<<<<<< HEAD
-        <!-- Verification Card -->
-        <div class="bg-white border-2 border-slate-300 rounded-2xl shadow-2xl p-7 sm:p-8 text-center">
-
-            <!-- Notification Link Sent -->
-            @if (session('status') == 'verification-link-sent')
-                <div class="mb-6 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-left" role="alert">
-                    <div class="flex items-start gap-3">
-                        <div class="flex-shrink-0 text-emerald-600 text-lg">
-                            <svg class="w-5 h-5 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-emerald-900">
-                                Tautan Berhasil Dikirim!
-                            </p>
-                            <p class="text-xs text-emerald-800 mt-0.5">
-                                Tautan verifikasi baru telah dikirimkan ke alamat email Anda.
-                            </p>
-                        </div>
-=======
     <!-- Decorative Background -->
 
     <div
@@ -93,11 +48,9 @@
         aria-hidden="true"
     ></div>
 
-
     <!-- Main Container -->
 
     <div class="relative mx-auto w-full max-w-7xl">
-
 
         <!-- =====================================================
              CONTENT
@@ -117,13 +70,12 @@
                 <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border-2 border-blue-200 bg-blue-50 p-2.5 shadow-sm">
 
                     <img
-                        src="{{ asset('storage/assets/logosedolor.png') }}"
-                        alt="Logo Sedulur"
+                        src="{{ asset('assets/logosedolor.png') }}"
+                        alt="Logo Sedolor"
                         class="h-full w-full object-contain"
                     >
 
                 </div>
-
 
                 <h1
                     id="page-title"
@@ -132,14 +84,12 @@
                     Selamat Datang
                 </h1>
 
-
                 <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526581] lg:text-lg">
                     Masuk ke akun Anda untuk melanjutkan
                     pendaftaran produk secara online.
                 </p>
 
             </section>
-
 
             <!-- =================================================
                  LOGIN CARD
@@ -150,13 +100,9 @@
                 aria-labelledby="login-form-title"
             >
 
-                <h2
-                    id="login-form-title"
-                    class="sr-only"
-                >
+                <h2 id="login-form-title" class="sr-only">
                     Formulir Masuk ke Akun
                 </h2>
-
 
                 <!-- ERROR MESSAGE -->
 
@@ -183,17 +129,14 @@
                                     stroke-width="2"
                                     viewBox="0 0 24 24"
                                 >
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14a2 2 0 001.73 3h16.32a2 2 0 001.73-3l-8.18-14a2 2 0 00-3.46 0z"
                                     />
-
                                 </svg>
 
                             </div>
-
 
                             <div>
 
@@ -225,7 +168,6 @@
 
                 @endif
 
-
                 <!-- STATUS -->
 
                 @if (session('status'))
@@ -242,7 +184,6 @@
                     </div>
 
                 @endif
-
 
                 <!-- SECURITY INFORMATION -->
 
@@ -263,17 +204,14 @@
                             stroke-width="2"
                             viewBox="0 0 24 24"
                         >
-
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-2V7a4 4 0 00-8 0v4h8z"
                             />
-
                         </svg>
 
                     </div>
-
 
                     <div>
 
@@ -290,7 +228,6 @@
 
                 </div>
 
-
                 <!-- =================================================
                      LOGIN FORM
                 ================================================== -->
@@ -303,7 +240,6 @@
 
                     @csrf
 
-
                     <!-- EMAIL -->
 
                     <div>
@@ -312,22 +248,10 @@
                             for="email"
                             class="mb-2 block text-base font-bold text-[#172b4d]"
                         >
-
                             Email
-
-                            <span
-                                class="text-red-600"
-                                aria-hidden="true"
-                            >
-                                *
-                            </span>
-
-                            <span class="sr-only">
-                                wajib diisi
-                            </span>
-
+                            <span class="text-red-600" aria-hidden="true">*</span>
+                            <span class="sr-only">wajib diisi</span>
                         </label>
-
 
                         <div class="relative">
 
@@ -343,17 +267,14 @@
                                     stroke-width="2"
                                     viewBox="0 0 24 24"
                                 >
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                     />
-
                                 </svg>
 
                             </div>
-
 
                             <input
                                 type="email"
@@ -375,14 +296,12 @@
 
                         </div>
 
-
                         <p
                             id="email-help"
                             class="mt-2 text-sm leading-6 text-slate-500"
                         >
                             Gunakan email yang terdaftar pada akun Anda.
                         </p>
-
 
                         @error('email')
 
@@ -391,21 +310,13 @@
                                 class="mt-2 flex items-start gap-2 text-sm font-bold text-red-700"
                                 role="alert"
                             >
-
-                                <span aria-hidden="true">
-                                    ⚠
-                                </span>
-
-                                <span>
-                                    {{ $message }}
-                                </span>
-
+                                <span aria-hidden="true">⚠</span>
+                                <span>{{ $message }}</span>
                             </p>
 
                         @enderror
 
                     </div>
-
 
                     <!-- PASSWORD -->
 
@@ -415,22 +326,10 @@
                             for="password"
                             class="mb-2 block text-base font-bold text-[#172b4d]"
                         >
-
                             Kata Sandi
-
-                            <span
-                                class="text-red-600"
-                                aria-hidden="true"
-                            >
-                                *
-                            </span>
-
-                            <span class="sr-only">
-                                wajib diisi
-                            </span>
-
+                            <span class="text-red-600" aria-hidden="true">*</span>
+                            <span class="sr-only">wajib diisi</span>
                         </label>
-
 
                         <div class="relative">
 
@@ -446,17 +345,14 @@
                                     stroke-width="2"
                                     viewBox="0 0 24 24"
                                 >
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-2V7a4 4 0 00-8 0v4H6"
                                     />
-
                                 </svg>
 
                             </div>
-
 
                             <input
                                 type="password"
@@ -471,7 +367,6 @@
                                 @enderror
                                 class="w-full rounded-2xl border-2 border-slate-300 bg-white py-4 pl-14 pr-16 text-base font-medium text-slate-900 placeholder-slate-400 shadow-sm transition hover:border-slate-400 focus:border-blue-700 focus:ring-4 focus:ring-blue-100"
                             >
-
 
                             <!-- Show / Hide Password -->
 
@@ -493,21 +388,17 @@
                                     viewBox="0 0 24 24"
                                     aria-hidden="true"
                                 >
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                     />
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                     />
-
                                 </svg>
-
 
                                 <svg
                                     id="eyeClosed"
@@ -518,19 +409,16 @@
                                     viewBox="0 0 24 24"
                                     aria-hidden="true"
                                 >
-
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         d="M3 3l18 18M10.584 10.587a2 2 0 002.829 2.828M9.88 5.09A9.77 9.77 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.04 10.04 0 01-4.132 5.411M6.228 6.228C4.531 7.484 3.27 9.176 2.458 12c1.274 4.057 5.064 7 9.542 7 1.61 0 3.13-.377 4.47-1.045"
                                     />
-
                                 </svg>
 
                             </button>
 
                         </div>
-
 
                         @error('password')
 
@@ -539,66 +427,13 @@
                                 class="mt-2 flex items-start gap-2 text-sm font-bold text-red-700"
                                 role="alert"
                             >
-
-                                <span aria-hidden="true">
-                                    ⚠
-                                </span>
-
-                                <span>
-                                    {{ $message }}
-                                </span>
-
+                                <span aria-hidden="true">⚠</span>
+                                <span>{{ $message }}</span>
                             </p>
 
                         @enderror
 
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
                     </div>
-
-<<<<<<< HEAD
-            <!-- Icon Email -->
-            <div class="my-4">
-                <div class="mx-auto w-20 h-20 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-inner">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-            </div>
-
-            <h2 class="text-xl font-bold text-slate-900 mb-2">
-                Terima kasih telah mendaftar!
-            </h2>
-
-            <p class="text-sm text-slate-600 leading-relaxed mb-6">
-                Kami telah mengirimkan link verifikasi ke email Anda. Silakan periksa kotak masuk atau folder <span class="font-bold text-slate-700">Spam</span> untuk menyelesaikan pendaftaran.
-            </p>
-
-            <!-- Kirim Ulang Email Form -->
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl mb-6">
-                <p class="text-xs font-semibold text-slate-600 mb-3">
-                    Belum menerima email verifikasi?
-                </p>
-
-                <form method="POST" action="{{ route('verification.send') }}">
-                    @csrf
-                    <button
-                        type="submit"
-                        class="w-full py-3 px-4 rounded-xl bg-blue-700 text-white font-bold text-sm shadow-md transition hover:bg-blue-800 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
-                    >
-                        Kirim Ulang Email Verifikasi
-                    </button>
-                </form>
-            </div>
-
-            <!-- Divider -->
-            <div class="relative my-6">
-                <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-slate-300"></div>
-                </div>
-                <div class="relative flex justify-center">
-                    <span class="bg-white px-3 text-xs font-bold text-slate-400">
-                        ATAU
-=======
 
                     <!-- REMEMBER ME + FORGOT PASSWORD -->
 
@@ -623,7 +458,6 @@
 
                         </label>
 
-
                         <a
                             href="{{ route('password.request') }}"
                             class="inline-flex min-h-[46px] items-center justify-center rounded-xl px-2 py-2 text-base font-bold text-blue-700 transition hover:bg-blue-50 hover:text-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-200"
@@ -632,7 +466,6 @@
                         </a>
 
                     </div>
-
 
                     <!-- LOGIN BUTTON -->
 
@@ -653,19 +486,16 @@
                             viewBox="0 0 24 24"
                             aria-hidden="true"
                         >
-
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M5 12h14m-6-6l6 6-6 6"
                             />
-
                         </svg>
 
                     </button>
 
                 </form>
-
 
                 <!-- REGISTER -->
 
@@ -675,34 +505,17 @@
 
                     <span class="text-sm font-semibold text-slate-400">
                         atau
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
                     </span>
 
                     <div class="h-px flex-1 bg-slate-200"></div>
 
                 </div>
-<<<<<<< HEAD
-            </div>
-
-            <!-- Logout Form -->
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button
-                    type="submit"
-                    class="w-full py-3 px-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 font-bold text-sm transition hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-4 focus:ring-red-200"
-                >
-                    Keluar / Ganti Akun
-                </button>
-            </form>
-=======
-
 
                 <div class="text-center">
 
                     <p class="mb-3 text-sm font-medium text-slate-600">
                         Belum memiliki akun?
                     </p>
-
 
                     <a
                         href="{{ route('register') }}"
@@ -717,34 +530,18 @@
                             viewBox="0 0 24 24"
                             aria-hidden="true"
                         >
-
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2m6-6a4 4 0 100-8 4 4 0 000 8zm10 0v-6m3 3h-6"
                             />
-
                         </svg>
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 
                         Daftar Akun Pemohon
 
-<<<<<<< HEAD
-        <!-- Back Button -->
-        <div class="mt-5 text-center">
-            <a
-                href="/"
-                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white/80 border border-slate-300 hover:text-blue-700 hover:bg-white hover:border-slate-400 shadow-xs transition"
-            >
-                <span>←</span>
-                <span>Kembali ke Beranda</span>
-            </a>
-        </div>
-=======
                     </a>
 
                 </div>
-
 
                 <!-- BACK TO HOME -->
 
@@ -763,13 +560,11 @@
                             viewBox="0 0 24 24"
                             aria-hidden="true"
                         >
-
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M19 12H5m7 7l-7-7 7-7"
                             />
-
                         </svg>
 
                         Kembali ke Beranda
@@ -781,7 +576,6 @@
             </section>
 
         </main>
-
 
         <!-- FOOTER -->
 
@@ -798,51 +592,22 @@
             </p>
 
         </footer>
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 
     </div>
 
 </div>
-
-<<<<<<< HEAD
-<!-- Pop-up Notifikasi SweetAlert jika link dikirim ulang -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        @if(session('status') == 'verification-link-sent')
-            Swal.fire({
-                icon: 'success',
-                title: 'Tautan Terkirim!',
-                text: 'Silakan periksa folder masuk atau spam di email Anda.',
-                confirmColor: '#1d4ed8'
-            });
-        @endif
-    });
-=======
 
 <!-- =========================================================
      JAVASCRIPT
 ========================================================= -->
 
 <script>
-
 document.addEventListener('DOMContentLoaded', function () {
 
-    /* ========================================================
-       SHOW / HIDE PASSWORD
-    ======================================================== */
-
-    const passwordInput =
-        document.getElementById('password');
-
-    const togglePassword =
-        document.getElementById('togglePassword');
-
-    const eyeOpen =
-        document.getElementById('eyeOpen');
-
-    const eyeClosed =
-        document.getElementById('eyeClosed');
-
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const eyeOpen = document.getElementById('eyeOpen');
+    const eyeClosed = document.getElementById('eyeClosed');
 
     if (
         passwordInput &&
@@ -853,9 +618,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         togglePassword.addEventListener('click', function () {
 
-            const isHidden =
-                passwordInput.type === 'password';
-
+            const isHidden = passwordInput.type === 'password';
 
             if (isHidden) {
 
@@ -877,7 +640,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.add('hidden');
-
                 eyeClosed.classList.remove('hidden');
 
             } else {
@@ -900,7 +662,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 eyeOpen.classList.remove('hidden');
-
                 eyeClosed.classList.add('hidden');
 
             }
@@ -910,8 +671,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
-
->>>>>>> 12ded19613921a8d46eb44987fdea92e7d2cb0d5
 </script>
 
 @endsection
