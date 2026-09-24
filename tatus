@@ -1,0 +1,45 @@
+[35mresources/views/auth/forgot-password.blade.php[m[36m:[m[32m280[m[36m:[m[1;31m=======[m================================================== --}}
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m7[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m13[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m19[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m42[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m50[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m54[m[36m:[m[1;31m=======[m================================================== -->
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m55[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m62[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m83[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m555[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m558[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m601[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m678[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m684[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m697[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m728[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m732[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m743[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m801[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m807[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m820[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m824[m[36m:[m[1;31m=======[m================================================== -->
+[35mresources/views/auth/login.blade.php[m[36m:[m[32m914[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m7[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m10[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m16[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m32[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m69[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m80[m[36m:[m[1;31m=======[m================================================== -->
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m558[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m562[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m692[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m841[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m846[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m901[m[36m:[m[1;31m=======[m
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m920[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/auth/register.blade.php[m[36m:[m[32m929[m[36m:[m[1;31m=======[m================================================== -->
+[35mresources/views/dashboard.blade.php[m[36m:[m[32m23[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/dashboard.blade.php[m[36m:[m[32m2762[m[36m:[m[1;31m=======[m
+[35mresources/views/dashboard.blade.php[m[36m:[m[32m2765[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
+[35mresources/views/dashboard.blade.php[m[36m:[m[32m3300[m[36m:[m[1;31m=======[m================================================== --}}
+[35mresources/views/home.blade.php[m[36m:[m[32m121[m[36m:[m[1;31m<<<<<<<[m HEAD
+[35mresources/views/home.blade.php[m[36m:[m[32m908[m[36m:[m[1;31m=======[m
+[35mresources/views/home.blade.php[m[36m:[m[32m918[m[36m:[m[1;31m>>>>>>>[m 12ded19613921a8d46eb44987fdea92e7d2cb0d5
