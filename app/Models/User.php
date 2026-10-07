@@ -30,9 +30,9 @@ class User extends Authenticatable
     }
 
     public function isVerifikator(): bool
-    {
-        return $this->role === 'verifikator';
-    }
+{
+    return $this->role === 'admin';
+}
 
     protected function casts(): array
     {

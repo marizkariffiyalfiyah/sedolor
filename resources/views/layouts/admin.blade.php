@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SEDOLOR')</title>
+
+    <title>SEDOLOR</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('assets/logosedolor.png') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- AlpineJS untuk toggle menu mobile & aksesibilitas -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
     <style>
         [x-cloak] {
@@ -233,8 +237,8 @@
                 {{-- MENU DESKTOP --}}
                 <div class="hidden md:flex items-center gap-2">
                     <!-- Beranda -->
-                    <a href="{{ route('dashboard') }}"
-                       class="rounded-xl px-4 py-2 text-sm font-medium transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700' }}">
+                    <a href="{{ route('admin.dashboard-admin') }}"
+                       class="rounded-xl px-4 py-2 text-sm font-medium transition {{ request()->routeIs('admin.dashboard-admin') ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700' }}">
                         Beranda
                     </a>
 

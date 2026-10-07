@@ -8,41 +8,34 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\Pendaftaran\ProductRegistrationController;
 use App\Http\Controllers\InformasiProdukController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
 | BERANDA & INFORMASI PUBLIK
 |--------------------------------------------------------------------------
+|
+| Halaman yang dapat diakses tanpa login.
+|
 */
 
 // Beranda
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-// Informasi produk
+// Informasi Produk
 Route::get('/informasi-produk', [HomeController::class, 'informasiProduk'])
     ->name('informasi-produk');
 
-// Route POST untuk menyimpan data form Informasi Produk & Mengirim WA via Fonnte
+// Simpan informasi produk
 Route::post('/informasi-produk', [InformasiProdukController::class, 'store'])
     ->name('informasi-produk.store');
-
-// Fonnte Webhook
-Route::match(
-    ['get', 'post'],
-    '/fonnte-webhook',
-    [InformasiProdukController::class, 'fonnteWebhook']
-);
 
 /*
 |--------------------------------------------------------------------------
 | AKSESIBILITAS
 |--------------------------------------------------------------------------
-|
-| Pengaturan aksesibilitas dapat digunakan dari halaman publik.
-|
 */
 
 Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
@@ -54,19 +47,13 @@ Route::post('/aksesibilitas', [AccessibilityController::class, 'update'])
 | AUTHENTICATION
 |--------------------------------------------------------------------------
 |
-| Daftar, login, dan lupa kata sandi hanya dapat diakses
-| oleh pengguna yang belum login.
+| Route berikut hanya dapat diakses oleh pengguna yang BELUM login.
 |
 */
 
 Route::middleware('guest')->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | DAFTAR AKUN
-    |--------------------------------------------------------------------------
-    */
-
+    // REGISTER
     Route::get('/daftar', [AuthController::class, 'showRegister'])
         ->name('register');
 
@@ -74,12 +61,7 @@ Route::middleware('guest')->group(function () {
         ->name('register.process');
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | LOGIN
-    |--------------------------------------------------------------------------
-    */
-
+    // LOGIN
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
 
@@ -87,29 +69,25 @@ Route::middleware('guest')->group(function () {
         ->name('login.process');
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | LUPA KATA SANDI
-    |--------------------------------------------------------------------------
-    */
-
+    // LUPA PASSWORD
     Route::get('/lupa-kata-sandi', [AuthController::class, 'showForgotPassword'])
         ->name('password.request');
 
     Route::post('/lupa-kata-sandi', [AuthController::class, 'sendResetLink'])
         ->name('password.email');
+
+
+    // MONITORING
+    Route::get('/monitoring', [MonitoringController::class, 'index'])
+        ->name('monitoring.index');
+
+    Route::get('/monitoring/{product}', [MonitoringController::class, 'show'])
+        ->name('monitoring.show');
 });
-
-
 /*
 |--------------------------------------------------------------------------
-| RESET KATA SANDI
+| RESET PASSWORD
 |--------------------------------------------------------------------------
-|
-| Route reset password TIDAK menggunakan middleware guest.
-| Dengan begitu, link reset dari email tetap dapat dibuka
-| meskipun user masih memiliki session login.
-|
 */
 
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
@@ -132,277 +110,118 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 /*
 |--------------------------------------------------------------------------
-| AREA PEMOHON
+| AREA USER / PEMOHON
 |--------------------------------------------------------------------------
 |
-| Semua fitur yang membutuhkan akun:
-| - Dashboard
-| - Pendaftaran produk
-| - Monitoring
-|
-| Pengguna hanya wajib login.
-| Tidak menggunakan verifikasi email.
+| Semua route di bawah membutuhkan login.
+| User biasa dapat mengakses dashboard, profil,
+| pendaftaran produk, dan monitoring.
 |
 */
-
 Route::middleware(['auth'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD
-    |--------------------------------------------------------------------------
-    */
-
+    // Dashboard user
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    // Riwayat seluruh pengajuan user
 
-    /*
-    |--------------------------------------------------------------------------
-    | PENDAFTARAN PRODUK
-    |--------------------------------------------------------------------------
-    */
+    Route::get('/riwayat-pengajuan', [InformasiProdukController::class, 'riwayat'])
+        ->name('riwayat-pengajuan');
 
-    Route::prefix('pendaftaran')
-        ->name('pendaftaran.')
-        ->group(function () {
+    // Monitoring pengajuan
+    Route::get('/monitoring', [MonitoringController::class, 'index'])
+        ->name('monitoring.index');
 
-            // Mulai pendaftaran
-            Route::get('/mulai', [
-                ProductRegistrationController::class,
-                'mulai'
-            ])->name('mulai');
+    // Detail satu pengajuan
+    Route::get('/monitoring/{product}', [MonitoringController::class, 'show'])
+        ->name('monitoring.show');
 
+    // Profil
+    Route::get('/profil', [ProfileController::class, 'index'])
+        ->name('profile');
 
-            // Form usaha
-            Route::get('/{product}/usaha', [
-                ProductRegistrationController::class,
-                'formUsaha'
-            ])->name('usaha');
+    Route::put('/profil', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
+    Route::put('/profil/password', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password.update');
 
-            // Simpan usaha
-            Route::post('/{product}/usaha', [
-                ProductRegistrationController::class,
-                'simpanUsaha'
-            ])->name('usaha.simpan');
+    // Pendaftaran
+    Route::prefix('pendaftaran')->name('pendaftaran.')->group(function () {
 
+        Route::get('/mulai', [ProductRegistrationController::class, 'mulai'])
+            ->name('mulai');
 
-            // Form produk
-            Route::get('/{product}/produk', [
-                ProductRegistrationController::class,
-                'formProduk'
-            ])->name('produk');
+        Route::get('/{product}/usaha', [ProductRegistrationController::class, 'formUsaha'])
+            ->name('usaha');
 
+        Route::post('/{product}/usaha', [ProductRegistrationController::class, 'simpanUsaha'])
+            ->name('usaha.simpan');
 
-            // Simpan produk
-            Route::post('/{product}/produk', [
-                ProductRegistrationController::class,
-                'simpanProduk'
-            ])->name('produk.simpan');
+        Route::get('/{product}/produk', [ProductRegistrationController::class, 'formProduk'])
+            ->name('produk');
 
+        Route::post('/{product}/produk', [ProductRegistrationController::class, 'simpanProduk'])
+            ->name('produk.simpan');
 
-            // Form dokumen
-            Route::get('/{product}/dokumen', [
-                ProductRegistrationController::class,
-                'formDokumen'
-            ])->name('dokumen');
+        Route::get('/{product}/dokumen', [ProductRegistrationController::class, 'formDokumen'])
+            ->name('dokumen');
 
+        Route::post('/{product}/dokumen', [ProductRegistrationController::class, 'simpanDokumen'])
+            ->name('dokumen.simpan');
 
-            // Simpan dokumen
-            Route::post('/{product}/dokumen', [
-                ProductRegistrationController::class,
-                'simpanDokumen'
-            ])->name('dokumen.simpan');
+        Route::delete('/{product}/dokumen/{document}', [ProductRegistrationController::class, 'hapusDokumen'])
+            ->name('dokumen.hapus');
 
+        Route::get('/{product}/periksa', [ProductRegistrationController::class, 'periksa'])
+            ->name('periksa');
 
-            // Hapus dokumen
-            Route::delete('/{product}/dokumen/{document}', [
-                ProductRegistrationController::class,
-                'hapusDokumen'
-            ])->name('dokumen.hapus');
+        Route::post('/{product}/kirim', [ProductRegistrationController::class, 'kirim'])
+            ->name('kirim');
+    });
 
-
-            // Periksa pendaftaran
-            Route::get('/{product}/periksa', [
-                ProductRegistrationController::class,
-                'periksa'
-            ])->name('periksa');
-
-
-            // Kirim pendaftaran
-            Route::post('/{product}/kirim', [
-                ProductRegistrationController::class,
-                'kirim'
-            ])->name('kirim');
-        });
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | MONITORING
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/monitoring', [
-        MonitoringController::class,
-        'index'
-    ])->name('monitoring.index');
-
-
-    Route::get('/monitoring/{product}', [
-        MonitoringController::class,
-        'show'
-    ])->name('monitoring.show');
 });
-
 
 /*
 |--------------------------------------------------------------------------
-| AREA VERIFIKATOR BPOM
+| AREA ADMIN / VERIFIKATOR BPOM
 |--------------------------------------------------------------------------
 |
-| Hanya dapat diakses oleh:
-| - pengguna yang sudah login
-| - memiliki role verifikator
-|
-| Tidak menggunakan middleware verified karena
-| verifikasi email sudah dihapus.
+| Hanya user dengan role "admin" yang dapat mengakses
+| halaman dashboard admin.
 |
 */
-
-Route::middleware(['auth', 'verifikator'])
+Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-        // Daftar pengajuan yang perlu diverifikasi
-        Route::get('/verifikasi', [
-            VerifikasiController::class,
-            'index'
-        ])->name('verifikasi.index');
+        Route::get('/dashboard-admin', [VerifikasiController::class, 'index'])
+            ->name('dashboard-admin');
 
+        Route::get('/pengajuan/{product}', [VerifikasiController::class, 'show'])
+            ->name('pengajuan.show');
 
-        // Detail pengajuan
-        Route::get('/verifikasi/{product}', [
-            VerifikasiController::class,
-            'show'
-        ])->name('verifikasi.show');
+        Route::put('/pengajuan/{product}', [VerifikasiController::class, 'update'])
+            ->name('pengajuan.update');
 
+        // Route Export Excel
+        Route::get('/antrean/export', [InformasiProdukController::class, 'exportExcel'])
+            ->name('antrean.export');
 
-        // Proses verifikasi
-        Route::post('/verifikasi/{product}', [
-            VerifikasiController::class,
-            'update'
-        ])->name('verifikasi.update');
-});
+        // PERBAIKAN: Ubah '/admin/antrean/...' menjadi '/antrean/...'
+        Route::patch('/antrean/{id}/update-status', [InformasiProdukController::class, 'updateStatus'])
+            ->name('dashboard-admin.update-status'); 
+    });
 
-
+    
 /*
 |--------------------------------------------------------------------------
-| DEMO MONITORING
+| FORCE LOGOUT
 |--------------------------------------------------------------------------
 |
-| Khusus untuk melihat tampilan monitoring tanpa database.
-|
-*/
-
-Route::get('/demo-monitoring-index', function () {
-
-    $product1 = (object) [
-        'id' => 1,
-        'nomor_pengajuan' => 'REQ-2026-0001',
-        'nama_produk' => 'Keripik Singkong Balado',
-        'brand' => 'Maicih Rasa Nusantara',
-        'status' => 'sedang_diproses'
-    ];
-
-    $product2 = (object) [
-        'id' => 2,
-        'nomor_pengajuan' => 'REQ-2026-0002',
-        'nama_produk' => 'Kopi Susu Gula Aren',
-        'brand' => 'Kopi Sedulur Jowo',
-        'status' => 'perlu_revisi'
-    ];
-
-    $products = [$product1, $product2];
-
-    return view(
-        'monitoring.index',
-        compact('products')
-    );
-});
-
-
-Route::get('/demo-monitoring-show', function () {
-
-    $product = (object) [
-        'id' => 1,
-        'nama_produk' => 'Keripik Singkong Balado',
-        'nomor_pengajuan' => 'REQ-2026-0001',
-        'status' => 'sedang_diproses',
-
-        'statusLabel' => function () {
-            return 'Sedang Diproses';
-        },
-
-        'statusHistories' => [
-
-            (object) [
-                'status' => 'pendaftaran_diajukan',
-                'keterangan' =>
-                    'Berkas pendaftaran awal berhasil diterima oleh sistem.',
-                'created_at' => now()->subDays(2)
-            ],
-
-            (object) [
-                'status' => 'sedang_diproses',
-                'keterangan' =>
-                    'Berkas sedang dalam tahap peninjauan oleh tim verifikator.',
-                'created_at' => now()
-            ]
-        ]
-    ];
-
-    $documents = [];
-
-    return view(
-        'monitoring.show',
-        compact(
-            'product',
-            'documents'
-        )
-    );
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| DEMO DASHBOARD
-|--------------------------------------------------------------------------
-|
-| Khusus desain tanpa login.
-|
-*/
-
-Route::get('/dashboard-demo', function () {
-
-    $products = collect();
-
-    return view(
-        'dashboard',
-        compact('products')
-    );
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| FORCE LOGOUT - SEMENTARA UNTUK TESTING
-|--------------------------------------------------------------------------
-|
-| Digunakan untuk membersihkan session login yang masih tersimpan.
-| HAPUS ROUTE INI SETELAH TESTING SELESAI.
+| Digunakan untuk testing.
 |
 */
 
@@ -411,7 +230,9 @@ Route::get('/force-logout', function (Illuminate\Http\Request $request) {
     auth()->logout();
 
     $request->session()->invalidate();
+
     $request->session()->regenerateToken();
 
-    return redirect()->route('login');
-});
+    return redirect()->route('home');
+
+})->name('force-logout');

@@ -1,19 +1,30 @@
 <?php 
+
 namespace App\Http\Controllers;
 
+use App\Models\InformasiProduk;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Pastikan TIDAK ADA logika seperti ini:
-        // if (auth()->check()) { return redirect()->route('monitoring.index'); }
+        // 1. CEK ROLE ADMIN
+        // Jika yang login adalah admin, alihkan ke dashboard khusus admin
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard-admin');
+        }
 
-        // Kembalikan view dashboard publik secara langsung
-        $products = collect(); 
+        // 2. LOGIKA USER BIASA
+        // Mengambil riwayat pengajuan milik user yang sedang login
+        $riwayatPengajuan = InformasiProduk::where('user_id', auth()->id())
+            ->latest()
+            ->get();
 
-        return view('dashboard', compact('products'));
+        // Mengambil pengajuan paling baru milik user
+        $antreanAktif = $riwayatPengajuan->first();
+
+        // Kirim kedua data sekaligus ke view 'dashboard'
+        return view('dashboard', compact('riwayatPengajuan', 'antreanAktif'));
     }
 }
-?>

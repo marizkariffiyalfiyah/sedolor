@@ -14,6 +14,7 @@ return new class extends Migration
             $table->foreignId('business_actor_id')->nullable()->constrained()->nullOnDelete();
             $table->string('nomor_pengajuan')->unique()->nullable();
             $table->string('nomor_registrasi')->unique()->nullable();
+            $table->string('nomor_antrean')->nullable();
             $table->string('nama_produk')->nullable();
             $table->enum('kategori_produk', ['obat', 'kosmetik', 'pangan_olahan', 'obat_tradisional', 'suplemen'])->nullable();
             $table->enum('jenis_pengajuan', ['baru', 'perpanjangan', 'variasi'])->nullable();

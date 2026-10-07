@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -10,9 +9,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        @yield('title', 'Sedulur')
-    </title>
+    <title>SEDOLOR</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('assets/logosedolor.png') }}">
 
     @vite([
         'resources/css/app.css',
@@ -20,11 +19,13 @@
     ])
 
     <style>
-    [x-cloak] { display: none !important; }
-</style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body class="min-h-screen">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
 
     {{-- Navbar --}}
     @include('layouts.header')
@@ -34,7 +35,11 @@
 
     {{-- Footer --}}
     @include('layouts.footer')
+    
+    {{-- Aksesibilitas --}}
+    @include('layouts.aksesibilitas')
 
 </body>
 
 </html>
+

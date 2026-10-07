@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules\Password;
 class AuthController extends Controller
 {
     /**
-     * Menampilkan halaman registrasi.
+     * Menampilkan halaman register.
      */
     public function showRegister()
     {
@@ -21,35 +21,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Proses registrasi akun.
+     * Proses register.
      */
     public function register(Request $request)
     {
         $data = $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                'unique:users,email',
-            ],
-
-            'phone' => [
-                'required',
-                'string',
-                'max:20',
-            ],
-
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8),
-            ],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'string', 'max:20'],
+            'password' => ['required', 'confirmed', Password::min(8)],
         ]);
 
         $user = User::create([
@@ -59,12 +39,6 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
             'role' => 'pemohon',
         ]);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Login otomatis setelah registrasi
-        |--------------------------------------------------------------------------
-        */
 
         Auth::login($user);
 
@@ -87,69 +61,33 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => [
-                'required',
-                'email',
-            ],
-
-            'password' => [
-                'required',
-            ],
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Coba login
-        |--------------------------------------------------------------------------
-        */
-
-        if (!Auth::attempt(
-            $credentials,
-            $request->boolean('remember')
-        )) {
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()
                 ->withErrors([
-                    'email' => 'Email atau kata sandi salah.',
+                    'email' => 'Email atau kata sandi yang dimasukkan salah.',
                 ])
                 ->withInput($request->only('email'));
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Regenerate session
-        |--------------------------------------------------------------------------
-        */
 
         $request->session()->regenerate();
 
         $user = Auth::user();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Jika user adalah verifikator
-        |--------------------------------------------------------------------------
-        */
-
-        if ($user->isVerifikator()) {
-            return redirect()->route('admin.verifikasi.index');
+        // ADMIN → Dashboard Admin
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard-admin');
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | User pemohon
-        |--------------------------------------------------------------------------
-        */
-
-        return redirect()
-            ->intended(route('dashboard'));
+        // PEMOHON → Dashboard User
+        return redirect()->route('dashboard');
     }
 
-    // ==========================================================
-    // LUPA KATA SANDI
-    // ==========================================================
-
     /**
-     * Menampilkan halaman lupa kata sandi.
+     * Menampilkan halaman lupa password.
      */
     public function showForgotPassword()
     {
@@ -157,15 +95,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Mengirim tautan reset kata sandi ke email.
+     * Mengirim link reset password.
      */
     public function sendResetLink(Request $request)
     {
         $request->validate([
-            'email' => [
-                'required',
-                'email',
-            ],
+            'email' => ['required', 'email'],
         ]);
 
         $status = PasswordFacade::sendResetLink(
@@ -173,21 +108,18 @@ class AuthController extends Controller
         );
 
         if ($status === PasswordFacade::RESET_LINK_SENT) {
-            return back()->with(
-                'status',
-                'Link reset kata sandi telah dikirim ke email Anda.'
-            );
+            return back()->with('status', __($status));
         }
 
         return back()
+            ->withInput($request->only('email'))
             ->withErrors([
                 'email' => __($status),
-            ])
-            ->onlyInput('email');
+            ]);
     }
 
     /**
-     * Menampilkan halaman untuk membuat kata sandi baru.
+     * Menampilkan halaman reset password.
      */
     public function showResetPassword(Request $request, string $token)
     {
@@ -198,59 +130,44 @@ class AuthController extends Controller
     }
 
     /**
-     * Memproses perubahan kata sandi.
+     * Proses reset password.
      */
     public function resetPassword(Request $request)
     {
-        $data = $request->validate([
-            'token' => [
-                'required',
-            ],
-
-            'email' => [
-                'required',
-                'email',
-            ],
-
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8),
-            ],
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', Password::min(8)],
         ]);
 
         $status = PasswordFacade::reset(
-            [
-                'token' => $data['token'],
-                'email' => $data['email'],
-                'password' => $data['password'],
-                'password_confirmation' => $request->password_confirmation,
-            ],
+            $request->only(
+                'email',
+                'password',
+                'password_confirmation',
+                'token'
+            ),
             function (User $user, string $password) {
-                $user->password = Hash::make($password);
-                $user->save();
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->save();
+
+                Auth::login($user);
             }
         );
 
         if ($status === PasswordFacade::PASSWORD_RESET) {
             return redirect()
                 ->route('login')
-                ->with(
-                    'status',
-                    'Kata sandi berhasil diubah. Silakan masuk menggunakan kata sandi baru Anda.'
-                );
+                ->with('status', __($status));
         }
 
         return back()
+            ->withInput($request->only('email'))
             ->withErrors([
                 'email' => __($status),
-            ])
-            ->withInput($request->only('email'));
+            ]);
     }
-
-    // ==========================================================
-    // LOGOUT
-    // ==========================================================
 
     /**
      * Logout.
@@ -260,10 +177,8 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect()
-            ->route('home');
+        return redirect()->route('home');
     }
 }

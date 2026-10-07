@@ -2,54 +2,40 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'password',
-        'role',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role', 'phone'];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * Relasi User dengan Product.
-     * Satu user dapat memiliki banyak produk.
-     */
+    protected function casts(): array
+    {
+        return ['email_verified_at' => 'datetime', 'password' => 'hashed'];
+    }
+
+    public function businessActor()
+    {
+        return $this->hasOne(BusinessActor::class);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);
     }
 
-    /**
-     * Mengecek apakah user merupakan verifikator.
-     */
+    public function accessibilitySetting()
+    {
+        return $this->hasOne(AccessibilitySetting::class);
+    }
+
     public function isVerifikator(): bool
     {
         return $this->role === 'verifikator';
-    }
-
-    /**
-     * Attribute casting.
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }
