@@ -10,43 +10,29 @@ use Carbon\Carbon;
 
 class InformasiProdukController extends Controller
 {
-    /**
-     * Menampilkan riwayat pengajuan milik user yang sedang login.
-     */
     public function riwayat()
     {
         $user = auth()->user();
 
         $query = InformasiProduk::query();
-
-        // 1. Filter berdasarkan ID user yang sedang login
         if (Schema::hasColumn('informasi_produks', 'user_id')) {
             $query->where('user_id', $user->id);
         } else {
-            // Fallback jika belum ada kolom user_id
             $query->where('nama_lengkap', $user->name);
         }
 
-        // 2. Ambil semua data riwayat dari yang terbaru dengan pagination
         $informasi_produks = $query->latest()->paginate(10);
 
         return view('riwayat-pengajuan', compact('informasi_produks'));
     }
-
-    /**
-     * Menampilkan dashboard antrean dan riwayat pengajuan dengan Filter & Search.
-     */
     public function index(Request $request)
     {
-        // 1. Ambil Antrean Aktif Hari Ini
         $antreanAktif = InformasiProduk::whereDate('tanggal_permintaan', Carbon::today())
             ->latest('id')
             ->first();
 
-        // 2. Query Riwayat Antrean
         $query = InformasiProduk::query();
 
-        // Filter pencarian
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('nama_lengkap', 'like', '%' . $request->search . '%')
@@ -54,7 +40,6 @@ class InformasiProdukController extends Controller
             });
         }
 
-        // Ambil data dengan pagination & pertahankan parameter query URL
         $riwayatAntrean = $query->orderBy('tanggal_permintaan', 'desc')
             ->orderBy('id', 'desc')
             ->paginate(10)
@@ -63,9 +48,6 @@ class InformasiProdukController extends Controller
         return view('admin.antrean', compact('antreanAktif', 'riwayatAntrean'));
     }
 
-    /**
-     * Memperbarui status antrean dari admin.
-     */
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
@@ -80,9 +62,6 @@ class InformasiProdukController extends Controller
         return redirect()->back()->with('success', 'Status berhasil diperbarui!');
     }
 
-    /**
-     * Export data antrean terfilter ke format CSV / Excel.
-     */
     public function exportExcel(Request $request)
     {
         $query = InformasiProduk::query();
@@ -142,9 +121,6 @@ class InformasiProdukController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    /**
-     * Menyimpan data pendaftaran antrean baru.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -166,7 +142,6 @@ class InformasiProdukController extends Controller
             $menitTambahan = ($urutan - 1) * 15; // <-- SUDAH DIPERBAIKI DI SINI
             $estimasiJam = $jamBuka->addMinutes($menitTambahan)->format('H:i') . ' WIB';
 
-            // Menyimpan pendaftaran dengan user_id yang sedang login
             $pendaftaran = InformasiProduk::create([
                 'user_id'            => auth()->id(),
                 'nama_lengkap'       => $validated['nama_lengkap'],
@@ -183,6 +158,10 @@ class InformasiProdukController extends Controller
                 'message'       => 'Pendaftaran berhasil disimpan!',
                 'nomor_antrean' => $nomorAntrean,
                 'jam_pelayanan' => $estimasiJam,
+                'nama'          => $pendaftaran->nama_lengkap,      // Tambahkan ini
+                'tanggal'       => $pendaftaran->tanggal_permintaan, // Tambahkan ini
+                'layanan'       => $pendaftaran->jenis_layanan,      // Tambahkan ini
+                'prioritas'     => $pendaftaran->prioritas,          // Tambahkan ini
             ]);
 
         } catch (\Exception $e) {
