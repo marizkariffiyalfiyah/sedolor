@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Paksa HTTPS di lingkungan Vercel / Production
+        if (config('app.env') === 'production' || isset($_ENV['VERCEL']) || getenv('VERCEL')) {
+            URL::forceScheme('https');
+        }
     }
 }
