@@ -1,6 +1,6 @@
 <?php
 
-// 1. Buat direktori temporer di /tmp (serverless writable directory)
+// Buat folder /tmp/storage jika belum ada
 $storageDirs = [
     '/tmp/storage/app',
     '/tmp/storage/framework/cache/data',
@@ -16,14 +16,4 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// 2. Override variabel environment untuk storage & cache
-putenv('APP_STORAGE_PATH=/tmp/storage');
-putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
-
-$_ENV['APP_STORAGE_PATH'] = '/tmp/storage';
-$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
-$_SERVER['APP_STORAGE_PATH'] = '/tmp/storage';
-$_SERVER['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
-
-// 3. Panggil aplikasi Laravel
 require __DIR__ . '/../public/index.php';
