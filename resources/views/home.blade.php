@@ -44,7 +44,7 @@
     <div class="relative z-10 max-w-[1160px] mx-auto px-4 md:px-5">
 
         {{-- =================================================
-             HERO TITLE - CENTER
+             HERO TITLE
         ================================================== --}}
         <div class="mx-auto max-w-[850px] text-center">
 
@@ -124,7 +124,6 @@
                 </div>
             </div>
 
-            {{-- Kolom Kanan: Gambar Gedung --}}
             <div class="md:col-span-5">
                 <div class="overflow-hidden rounded-xl shadow-lg border border-slate-100">
                     <img
@@ -142,7 +141,7 @@
 <section>
 
 {{-- =================================================
-            LAYANAN CEPAT - KOTAK BIRU #155EEF
+            DAFTAR LAYANAN 
 ================================================== --}}
 <section id="layanan" class="relative py-16 md:py-20 px-4">
 
@@ -161,22 +160,18 @@
 
         <div class="relative z-10 max-w-xl mx-auto">
 
-            {{-- Header Title --}}
             <h2 class="m-0 text-white text-2xl sm:text-3xl font-black tracking-tight leading-tight">
                 Pendaftaran Layanan BPOM
             </h2>
 
-            {{-- Description --}}
             <p class="mt-2.5 mb-8 text-sm sm:text-base text-blue-100/90 leading-relaxed font-normal">
                 Silakan masuk atau buat akun terlebih dahulu untuk mengakses seluruh fasilitas pendaftaran produk, izin edar, dan permohonan informasi resmi.
             </p>
 
-            {{-- Action Button Card --}}
             <a
                 href="{{ route('login') }}"
                 class="group relative flex items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-white hover:bg-blue-50 text-slate-800 shadow-xl shadow-black/10 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left cursor-pointer overflow-hidden"
             >
-                {{-- Left Icon --}}
                 <div class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center rounded-xl bg-blue-100/80 text-[#155EEF] group-hover:bg-[#155EEF] group-hover:text-white transition-colors duration-300 shadow-sm">
                     <svg
                         class="w-6 h-6 sm:w-7 sm:h-7 stroke-current fill-none stroke-[2]"
@@ -189,7 +184,6 @@
                     </svg>
                 </div>
 
-                {{-- Card Text --}}
                 <div class="grow">
                     <strong class="block text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-[#155EEF] transition-colors leading-snug">
                         Masuk / Daftar Akun Layanan
@@ -200,7 +194,6 @@
                     </span>
                 </div>
 
-                {{-- Right Arrow --}}
                 <div class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-blue-50 group-hover:bg-[#155EEF] flex items-center justify-center text-[#155EEF] group-hover:text-white group-hover:translate-x-1 transition-all duration-300">
                     <svg
                         class="w-5 h-5 stroke-current fill-none stroke-[2.5]"
@@ -244,13 +237,10 @@
         {{-- Alpine wrapper untuk modal --}}
         <div x-data="{ activeModal: null }">
 
-            {{-- =================================================
-                SERVICE CARDS
-            ================================================== --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
                 {{-- =================================================
-                    SERVICE CARD 1 - PERMINTAAN INFORMASI
+                   PERMINTAAN INFORMASI
                 ================================================== --}}
                 <div
                     class="relative flex flex-col min-h-[285px] p-[25px] overflow-hidden bg-white/80 border border-[#ADC3D9]/85 rounded-[18px] shadow-sm backdrop-blur-sm hover:-translate-y-2 hover:bg-white hover:shadow-xl transition-all duration-200 group"
@@ -315,19 +305,16 @@
 
 
                 {{-- =================================================
-                    SERVICE CARD 2 - REGISTRASI PRODUK
+                    REGISTRASI PRODUK
                 ================================================== --}}
                 <div
                     class="relative flex flex-col min-h-[285px] p-[25px] overflow-hidden bg-white/80 border border-[#ADC3D9]/85 rounded-[18px] shadow-sm backdrop-blur-sm hover:-translate-y-2 hover:bg-white hover:shadow-xl transition-all duration-200 group"
                 >
 
-                    {{-- Top Accent --}}
                     <div
                         class="absolute top-0 left-0 w-full h-[4px] bg-[#087F5B] scale-x-25 origin-left group-hover:scale-x-100 transition-transform duration-200"
                     ></div>
 
-
-                    {{-- Icon --}}
                     <div
                         class="w-[57px] h-[57px] flex items-center justify-center mb-[18px] rounded-[14px] bg-[#E7F7F1] text-[#087F5B] group-hover:-translate-y-1 group-hover:scale-105 transition-transform duration-200"
                     >
@@ -343,56 +330,41 @@
 
                     </div>
 
-
-                    {{-- Title --}}
                     <h3 class="m-0 mb-[8px] text-[#102A43] text-[19px] font-black">
                         Registrasi Produk
                     </h3>
 
-
-                    {{-- Description --}}
                     <p class="m-0 text-[#5B6B7D] text-sm leading-relaxed">
                         Layanan pengajuan dan informasi terkait proses registrasi produk sesuai dengan ketentuan BPOM.
                     </p>
 
-
-                    {{-- Button --}}
                     <button
                         type="button"
                         @click="activeModal = 2"
-                        class="inline-flex items-center justify-center gap-[7px] min-h-[46px] mt-auto pt-[18px] text-[#155EEF] text-sm font-black no-underline group-hover:gap-[11px] transition-all duration-200 cursor-pointer text-left"
-                    >
-
+                        class="inline-flex items-center justify-center gap-[7px] min-h-[46px] mt-auto pt-[18px] text-[#155EEF] text-sm font-black no-underline group-hover:gap-[11px] transition-all duration-200 cursor-pointer text-left">
                         Selengkapnya
-
                         <svg
                             class="w-[17px] h-[17px] stroke-current fill-none stroke-2 group-hover:translate-x-1 transition-transform duration-200"
                             viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
+                            aria-hidden="true">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
-
                     </button>
-
                 </div>
 
 
                 {{-- =================================================
-                    SERVICE CARD 3 - PENGADUAN & KONSULTASI
+                    PENGADUAN & KONSULTASI
                 ================================================== --}}
                 <div
                     class="relative flex flex-col min-h-[285px] p-[25px] overflow-hidden bg-white/80 border border-[#ADC3D9]/85 rounded-[18px] shadow-sm backdrop-blur-sm hover:-translate-y-2 hover:bg-white hover:shadow-xl transition-all duration-200 group"
                 >
 
-                    {{-- Top Accent --}}
                     <div
                         class="absolute top-0 left-0 w-full h-[4px] bg-[#A85B00] scale-x-25 origin-left group-hover:scale-x-100 transition-transform duration-200"
                     ></div>
 
-
-                    {{-- Icon --}}
                     <div
                         class="w-[57px] h-[57px] flex items-center justify-center mb-[18px] rounded-[14px] bg-[#FFF3DF] text-[#A85B00] group-hover:-translate-y-1 group-hover:scale-105 transition-transform duration-200"
                     >
@@ -407,20 +379,14 @@
 
                     </div>
 
-
-                    {{-- Title --}}
                     <h3 class="m-0 mb-[8px] text-[#102A43] text-[19px] font-black">
                         Pengaduan &amp; Konsultasi
                     </h3>
 
-
-                    {{-- Description --}}
                     <p class="m-0 text-[#5B6B7D] text-sm leading-relaxed">
                         Sampaikan keluhan, konsultasi, atau verifikasi keabsahan produk kepada tim terkait.
                     </p>
 
-
-                    {{-- Button --}}
                     <button
                         type="button"
                         @click="activeModal = 3"
@@ -461,7 +427,7 @@
             >
 
                 {{-- =================================================
-                    MODAL 1 - PERMINTAAN INFORMASI
+                    PERMINTAAN INFORMASI
                 ================================================== --}}
                 <div
                     x-show="activeModal === 1"
@@ -563,7 +529,6 @@
                 </div>
 
 
-                {{-- MODAL 2 - REGISTRASI PRODUK --}}
 <div
     x-show="activeModal === 2"
     @click.outside="activeModal = null"
@@ -646,7 +611,7 @@
 </div>
 
                 {{-- =================================================
-                    MODAL 3 - PENGADUAN & KONSULTASI
+                    PENGADUAN & KONSULTASI
                 ================================================== --}}
                 <div
                     x-show="activeModal === 3"
@@ -754,9 +719,6 @@
 
 </section>
 
-    {{-- =========================================================
-         CTA SECTION
-    ========================================================== --}}
     <section
     id="pengaduan" class="relative py-[80px] bg-gradient-to-b from-[#E1EDF7] to-[#D3E4F2]"
     >

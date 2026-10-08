@@ -236,9 +236,9 @@ function tampilkanModal(data) {
         `Halo Admin SEDOLOR, saya telah mendaftar layanan online.\n\n` +
         `• No. Antrean: ${data.nomor_antrean}\n` +
         `• Nama: ${data.nama}\n` +
-        `• Tanggal: ${data.tanggal}\n\n` +
+        `• Tanggal: ${data.tanggal}\n` +
         `• Jam Pelayanan: ${data.jam_pelayanan}\n` +
-        `• Layanan: ${data.layanan}\n\n` +
+        `• Layanan: ${data.layanan}\n` +
         `• Prioritas: ${data.prioritas}\n\n` +
         `Mohon info lebih lanjut. Terima kasih!`
     );

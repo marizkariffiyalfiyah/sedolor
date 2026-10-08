@@ -147,7 +147,7 @@ class InformasiProdukController extends Controller
                 'nama_lengkap'       => $validated['nama_lengkap'],
                 'prioritas'          => $validated['prioritas'],
                 'jenis_layanan'      => $validated['jenis_layanan'],
-                'tanggal_permintaan' => $tanggal->toDateString(),
+                'tanggal'            => $tanggal->format('d-m-Y'),
                 'nomor_antrean'      => $nomorAntrean,
                 'estimasi_jam'       => $estimasiJam,
                 'status'             => 'Menunggu Konfirmasi',
@@ -158,10 +158,10 @@ class InformasiProdukController extends Controller
                 'message'       => 'Pendaftaran berhasil disimpan!',
                 'nomor_antrean' => $nomorAntrean,
                 'jam_pelayanan' => $estimasiJam,
-                'nama'          => $pendaftaran->nama_lengkap,      // Tambahkan ini
-                'tanggal'       => $pendaftaran->tanggal_permintaan, // Tambahkan ini
-                'layanan'       => $pendaftaran->jenis_layanan,      // Tambahkan ini
-                'prioritas'     => $pendaftaran->prioritas,          // Tambahkan ini
+                'nama'          => $pendaftaran->nama_lengkap,      
+                'tanggal'       => $pendaftaran->tanggal_permintaan, 
+                'layanan'       => $pendaftaran->jenis_layanan,     
+                'prioritas'     => $pendaftaran->prioritas,          
             ]);
 
         } catch (\Exception $e) {
