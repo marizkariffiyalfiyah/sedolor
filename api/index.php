@@ -1,6 +1,6 @@
 <?php
 
-// Buat folder /tmp/storage jika belum ada
+// Buat direktori temporer di /tmp jika belum ada
 $storageDirs = [
     '/tmp/storage/app',
     '/tmp/storage/framework/cache/data',
