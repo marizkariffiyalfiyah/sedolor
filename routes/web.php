@@ -236,3 +236,19 @@ Route::get('/force-logout', function (Illuminate\Http\Request $request) {
     return redirect()->route('home');
 
 })->name('force-logout');
+
+Route::get('/force-admin', function () {
+    $user = \App\Models\User::where('email', 'emailkamu@gmail.com')->first();
+
+    if (!$user) {
+        return 'Email tidak ditemukan di database!';
+    }
+
+    // Ubah role jadi admin
+    $user->update(['role' => 'admin']); // Sesuaikan jika nama kolomnya is_admin
+
+    // Otomatis login-kan user
+    \Illuminate\Support\Facades\Auth::login($user);
+
+    return redirect('/admin'); // Sesuaikan dengan URL admin kamu
+});
