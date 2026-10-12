@@ -29,8 +29,12 @@ $_ENV['APP_CONFIG_CACHE'] = '/tmp/bootstrap/cache/config.php';
 $_ENV['APP_ROUTES_CACHE'] = '/tmp/bootstrap/cache/routes.php';
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
-// 3. Load Autoload Composer terlebih dahulu
-require __DIR__ . '/../vendor/autoload.php';
+// 3. Load Autoload Composer terlebih dahulu (dengan penanganan jika folder vendor belum ada)
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadPath)) {
+    die("Error: Folder vendor/autoload.php tidak ditemukan. Pastikan composer install berjalan di Vercel.");
+}
+require $autoloadPath;
 
 // 4. Inisialisasi Bootstrap App & Paksa Path Storage ke /tmp
 $app = require_once __DIR__ . '/../bootstrap/app.php';
